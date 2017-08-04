@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">手机镜子</string>
+    <string name="title_activity_main">手机镜子</string>
+    <string name="d">图片描述</string>
+    <string name="commit">确定</string>
+    <string name="back">返回</string>
+    <string name="corp">截屏</string>
+    <string name="camera_switch">切换</string>
+    <string name="share">分享</string>
+    <string name="save">保存</string>
+
+</resources>

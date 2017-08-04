@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 我的每一项 -->
+    <declare-styleable name="MysItem">
+        <attr name="title" format="string" />
+        <attr name="second_title" format="string" />
+        <attr name="icon" format="reference" />
+        <attr name="end_icon" format="reference" />
+        <attr name="hint" format="string" />
+        <attr name="valueColor" format="reference" />
+        <attr name="titleColor" format="reference" />
+        <attr name="textColor" format="reference" />
+        <attr name="necessaryIcon" format="reference" />
+        <attr name="valueSize" format="float" />
+        <attr name="titleSize" format="float" />
+        <attr name="textSize" format="float" />
+        <attr name="text" format="string" />
+        <attr name="value" format="string" />
+        <attr name="titleLeftMargin" format="integer" />
+        <attr name="linemode">
+            <enum name="both" value="0" />
+            <enum name="top" value="1" />
+            <enum name="bottom" value="2" />
+            <enum name="none" value="3" />
+        </attr>
+        <attr name="arrmode">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="necessarymode">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+            <enum name="gone" value="2" />
+        </attr>
+        <attr name="redPointVisiable">
+            <enum name="visible" value="0" />
+            <enum name="invisible" value="1" />
+        </attr>
+        <attr name="textPos">
+            <enum name="left" value="3" />
+            <enum name="center" value="17" />
+            <enum name="right" value="5" />
+        </attr>
+        <attr name="valuePos">
+            <enum name="left" value="3" />
+            <enum name="center" value="17" />
+            <enum name="right" value="5" />
+        </attr>
+        <attr name="inputMode">
+            <enum name="edit" value="0" />
+            <enum name="display" value="1" />
+        </attr>
+        <attr name="redPointAmount" format="string" />
+    </declare-styleable>
+</resources>

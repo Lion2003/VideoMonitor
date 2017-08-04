@@ -1,0 +1,97 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="icon_size_tinest">20dp</dimen>
+    <dimen name="common_margin">5dp</dimen>
+    <dimen name="action_bar_padding">50dp</dimen>
+    <dimen name="button_height_small">40dp</dimen>
+    <dimen name="bottom_tab_padding_drawable">5dip</dimen>
+    <dimen name="bottom_tab_padding_up">10dip</dimen>
+    <dimen name="bottom_tab_font_size">10.0dip</dimen>
+    <dimen name="item_height_large">48dp</dimen>
+    <dimen name="spacing_huge">24dp</dimen>
+    <dimen name="spacing_large">16dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+
+    <dimen name="font_huge">22sp</dimen>
+    <dimen name="font_small1">8sp</dimen>
+    <dimen name="font_small">12sp</dimen>
+    <dimen name="spacing_normal">12dp</dimen>
+    <dimen name="item_height_normal">48dp</dimen>
+    <dimen name="item_width_normal">48dp</dimen>
+    <dimen name="font_large">18sp</dimen>
+    <dimen name="edittext_height_normal">44dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="font_normal">15sp</dimen>
+
+
+    <dimen name="margin_15">15dip</dimen>
+    <dimen name="margin_10">10dip</dimen>
+    <dimen name="margin_1">1dip</dimen>
+    <dimen name="margin_20">20dip</dimen>
+    <dimen name="margin_25">25dip</dimen>
+
+    <dimen name="activity_titleH">48dp</dimen>
+    <!-- Margin、Padding 的多少 -->
+    <dimen name="wh_0">0dp</dimen>
+    <dimen name="mp_1">1dp</dimen>
+    <dimen name="mp_2">2dp</dimen>
+    <dimen name="mp_3">3dp</dimen>
+    <dimen name="mp_4">4dp</dimen>
+    <dimen name="mp_5">5dp</dimen>
+    <dimen name="mp_8">8dp</dimen>
+    <dimen name="mp_10">10dp</dimen>
+    <dimen name="mp_12">12dp</dimen>
+    <dimen name="mp_14">14dp</dimen>
+    <dimen name="mp_15">15dp</dimen>
+    <dimen name="mp_16">16dp</dimen>
+    <dimen name="mp_17">17dp</dimen>
+    <dimen name="mp_18">18dp</dimen>
+    <dimen name="mp_20">20dp</dimen>
+    <dimen name="mp_22">22dp</dimen>
+    <dimen name="mp_25">25dp</dimen>
+    <dimen name="mp_30">30dp</dimen>
+    <dimen name="mp_35">35dp</dimen>
+    <dimen name="mp_40">40dp</dimen>
+    <dimen name="mp_44">44dp</dimen>
+    <dimen name="mp_45">45dp</dimen>
+    <dimen name="mp_49">49dp</dimen>
+    <dimen name="mp_50">50dp</dimen>
+    <dimen name="mp_55">55dp</dimen>
+    <dimen name="mp_60">60dp</dimen>
+    <dimen name="mp_64">64dp</dimen>
+    <dimen name="mp_70">70dp</dimen>
+    <dimen name="mp_80">80dp</dimen>
+    <dimen name="mp_90">90dp</dimen>
+    <dimen name="mp_100">100dp</dimen>
+    <dimen name="mp_200">200dp</dimen>
+    <dimen name="mp_215">215dp</dimen>
+    <dimen name="mp_250">250dp</dimen>
+    <!-- 文字的大小  -->
+    <dimen name="f_5">5sp</dimen>
+    <dimen name="f_10">10sp</dimen>
+    <dimen name="f_11">11sp</dimen>
+    <dimen name="f_12">12sp</dimen>
+    <dimen name="f_13">13sp</dimen>
+    <dimen name="f_14">14sp</dimen>
+    <dimen name="f_15">15sp</dimen>
+    <dimen name="f_16">16sp</dimen>
+    <dimen name="f_17">17sp</dimen>
+    <dimen name="f_18">18sp</dimen>
+    <dimen name="f_19">19sp</dimen>
+    <dimen name="f_20">20sp</dimen>
+    <dimen name="f_21">21sp</dimen>
+    <dimen name="f_22">22sp</dimen>
+    <dimen name="f_23">23sp</dimen>
+
+    <dimen name="normal_text_size"> 14sp</dimen>
+    <dimen name="text_default_size">16sp</dimen>
+    <dimen name="default_padding">7dp</dimen>
+    <dimen name="widget_width_nor">40dp</dimen>
+    <dimen name="widget_height_nor">45dp</dimen>
+    <dimen name="margin_nor">15dp</dimen>
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+
+    <color name="black_overlay">#66000000</color>
+    <color name="main_color">#FF5CACEE</color>
+    <color name="light_main_color">#805CACEE</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#808080</color>
+    <color name="color_bg_bottom">#A0000000</color>
+
+</resources>
