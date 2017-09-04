@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Intent it = new Intent(LoginActivity.this, MainActivity31.class);
+                        Intent it = new Intent(LoginActivity.this, MainActivity4.class);
                         it.putExtra("CURRENT_ID", "0009153701");
                         startActivity(it);
                         finish();
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent it = new Intent(LoginActivity.this, MainActivity31.class);
+                                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
                                 it.putExtra("CURRENT_ID", CURRENT_ID);
                                 startActivity(it);
                                 finish();

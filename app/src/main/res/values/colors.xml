@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#8BC34A</color>
-    <color name="colorPrimaryDark">#689F38</color>
+    <color name="colorPrimary">#4CCDAA</color>
+    <color name="colorPrimaryDark">#4CCDAA</color>
     <color name="colorAccent">#FF4081</color>
 
 
@@ -21,7 +21,6 @@
     <color name="theme_text_blackdark">#ff0e0e0e</color>
     <color name="transparents">#00000000</color>
     <color name="icon_bar_text_color">#82858b</color>
-    <color name="divider_list">#d4d4d4</color>
     <color name="search_back">#eaeaea</color>
     <color name="black">#000000</color>
     <color name="black_111111">#111111</color>
@@ -103,7 +102,7 @@
     <color name="yellow">#ff9933</color>
     <color name="gray">#ff333333</color>
     <color name="gray_f9f9fc">#F9F9FC</color>
-    <color name="line_color">#dddddd</color>
+    <color name="line_color">#e6e6e6</color>
     <color name="light_blue">#5CACEE</color>
     <color name="blue_61A9FA">#61A9FA</color>
     <color name="blue_3B639F">#3B639F</color>
@@ -241,6 +240,7 @@
     <color name="isToday_BgColor">#ffebdcc1</color>
     <color name="specialReminder">#ffff0000</color>
     <color name="commonReminder">#ffbdbab5</color>
+    <color name="status_bar_color">#4CCDAA</color>
 
     <color name="gray2">#ffeef2fb</color>
 
@@ -248,5 +248,19 @@
     <color name="timepicker_toolbar_bg">#e60012</color>
     <color name="timepicker_dialog_bg">#80000000</color>
     <color name="timepicker_line">#e8e8e8</color>
+    <color name="common_bg">#fcfcfc</color>
+    <color name="voip_interface_text_color">#bababa</color>
+    <color name="toolbar_color">#4CCDAA</color>
+    <color name="bottom_bar_normal_bg">#2D2F31</color>
+    <color name="btn_white_normal">#f7f8f8</color>
+    <color name="divider_list">#d4d4d4</color>
 
+    <color name="color_eoeoeo">#e0e0e0</color>
+    <color name="color_e24a4a">#e24a4a</color>
+    <color name="color_4d4d4d">#4d4d4d</color>
+    <color name="color_808080">#808080</color>
+    <color name="color_f3f4f6">#f3f4f6</color>
+    <color name="color_f36c60">#f36c60</color>
+    <color name="color_666666">#666666</color>
+    <color name="color_00d381">#00d381</color>
 </resources>

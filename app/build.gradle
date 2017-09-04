@@ -30,4 +30,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':rollviewpager')
     compile project(':VideoPlayModule')
+    compile project(':bdvideoplayer')
 }

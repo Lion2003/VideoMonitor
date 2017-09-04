@@ -1,1 +1,1 @@
-include ':app', ':rollviewpager', ':camerasample', ':VideoPlayModule'
+include ':app', ':rollviewpager', ':camerasample', ':VideoPlayModule', ':bdvideoplayer'
