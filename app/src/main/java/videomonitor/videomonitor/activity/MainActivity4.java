@@ -14,8 +14,9 @@ import java.util.List;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.fragment.HomePagerFragment;
 import videomonitor.videomonitor.fragment.InstructBookFragment;
+import videomonitor.videomonitor.fragment.InstructionBookListFragment;
 import videomonitor.videomonitor.fragment.MineFragment;
-import videomonitor.videomonitor.fragment.VideoViewPagerFragment;
+import videomonitor.videomonitor.fragment.VideoStandardFragment;
 
 @SuppressLint("NewApi")
 public class MainActivity4 extends BaseActivity {
@@ -24,8 +25,8 @@ public class MainActivity4 extends BaseActivity {
 
     private Button[] mTabs;
     private HomePagerFragment homePagerFragment;
-    private VideoViewPagerFragment videoViewPagerFragment;
-    private InstructBookFragment instructBookFragment;
+    private VideoStandardFragment videoStandardFragment;
+    private InstructionBookListFragment instructBookFragment;
     private MineFragment mineFragment;
     private List<Fragment> fragments;
     private int index;
@@ -44,21 +45,26 @@ public class MainActivity4 extends BaseActivity {
         initView();
 
         homePagerFragment = new HomePagerFragment();
-        videoViewPagerFragment = new VideoViewPagerFragment();
-        instructBookFragment = new InstructBookFragment();
+        videoStandardFragment = new VideoStandardFragment();
+        instructBookFragment = new InstructionBookListFragment();
         mineFragment = new MineFragment();
+
+        Bundle bundle3 = new Bundle();
+        bundle3.putBoolean("isShowTitle", true);
+        instructBookFragment.setArguments(bundle3);
+
         fragments = new ArrayList<Fragment>(); //{ conversationListFragment, contactListFragment, workbenchFragment, settingFragment};
         fragments.add(homePagerFragment);
-        fragments.add(videoViewPagerFragment);
+        fragments.add(videoStandardFragment);
         fragments.add(instructBookFragment);
         fragments.add(mineFragment);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, homePagerFragment)
-                .add(R.id.fragment_container, videoViewPagerFragment)
+                .add(R.id.fragment_container, videoStandardFragment)
                 .add(R.id.fragment_container, instructBookFragment)
                 .add(R.id.fragment_container, mineFragment)
-                .hide(videoViewPagerFragment)
+                .hide(videoStandardFragment)
                 .hide(instructBookFragment)
                 .hide(mineFragment)
                 .show(homePagerFragment)

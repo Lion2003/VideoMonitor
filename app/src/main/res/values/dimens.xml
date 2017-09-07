@@ -44,8 +44,10 @@
     <dimen name="mp_4">4dp</dimen>
     <dimen name="mp_5">5dp</dimen>
     <dimen name="mp_8">8dp</dimen>
+    <dimen name="mp_9">9dp</dimen>
     <dimen name="mp_10">10dp</dimen>
     <dimen name="mp_12">12dp</dimen>
+    <dimen name="mp_13">13dp</dimen>
     <dimen name="mp_14">14dp</dimen>
     <dimen name="mp_15">15dp</dimen>
     <dimen name="mp_16">16dp</dimen>
@@ -53,8 +55,11 @@
     <dimen name="mp_18">18dp</dimen>
     <dimen name="mp_20">20dp</dimen>
     <dimen name="mp_22">22dp</dimen>
+    <dimen name="mp_24">24dp</dimen>
     <dimen name="mp_25">25dp</dimen>
+    <dimen name="mp_28">28dp</dimen>
     <dimen name="mp_30">30dp</dimen>
+    <dimen name="mp_31">31dp</dimen>
     <dimen name="mp_35">35dp</dimen>
     <dimen name="mp_40">40dp</dimen>
     <dimen name="mp_44">44dp</dimen>
@@ -63,14 +68,20 @@
     <dimen name="mp_50">50dp</dimen>
     <dimen name="mp_55">55dp</dimen>
     <dimen name="mp_60">60dp</dimen>
+    <dimen name="mp_61">61dp</dimen>
+    <dimen name="mp_62">62dp</dimen>
     <dimen name="mp_64">64dp</dimen>
     <dimen name="mp_70">70dp</dimen>
     <dimen name="mp_80">80dp</dimen>
     <dimen name="mp_90">90dp</dimen>
     <dimen name="mp_100">100dp</dimen>
+    <dimen name="mp_155">155dp</dimen>
+    <dimen name="mp_172">172dp</dimen>
+    <dimen name="mp_192">192dp</dimen>
     <dimen name="mp_200">200dp</dimen>
     <dimen name="mp_215">215dp</dimen>
     <dimen name="mp_250">250dp</dimen>
+    <dimen name="mp_258">258dp</dimen>
     <!-- 文字的大小  -->
     <dimen name="f_5">5sp</dimen>
     <dimen name="f_10">10sp</dimen>

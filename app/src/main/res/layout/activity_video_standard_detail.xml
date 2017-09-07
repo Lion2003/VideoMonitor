@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/color_eoeoeo"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="?attr/colorPrimary"
+        android:text="工艺编号 70045    工艺名称 暗合门襟腰头挂钩垫布连翻门襟腰头"
+        android:textSize="@dimen/f_16"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/mp_8"/>
+    <RelativeLayout
+        android:id="@+id/avsd_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:id="@+id/avsd_changeState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/mp_15"
+            android:paddingTop="@dimen/mp_15"
+            android:paddingBottom="@dimen/mp_15"
+            android:text="点击查看作业指导书"
+            android:textColor="@color/status_bar_color"
+            android:background="@drawable/select_shape_gray_normal_white_select"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/mp_15"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/em_ic_right_arrow"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/fh_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/avsd_relativeLayout"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/color_eoeoeo">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <TextView
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mp_44"
+            android:background="?attr/colorPrimary"
+            android:text="标准视频"
+            android:textSize="@dimen/f_17"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mp_50"
+            android:background="@color/color_f3f4f6">
+            <LinearLayout
+                android:id="@+id/supplier_list_activity"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal" >
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/mp_20"
+                    android:layout_marginRight="@dimen/mp_10"
+                    android:paddingLeft="@dimen/mp_10"
+                    android:paddingRight="@dimen/mp_10">
+                    <TextView
+                        android:id="@+id/supplier_list_activity_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textSize="@dimen/f_16"
+                        android:textColor="@color/tv_black6" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/icon_arrow_down" />
+                </LinearLayout>
+            </LinearLayout>
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="@dimen/mp_31"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/mp_20"
+                android:background="@drawable/shape_solid_white_corner_4dp_stroke_gray"
+                android:drawableLeft="@mipmap/icon_search"
+                android:drawablePadding="@dimen/mp_8"
+                android:paddingLeft="10dp"
+                android:hint="请输入搜索关键词"
+                android:textColorHint="@color/color_808080"
+                android:textColor="@color/color_4d4d4d"
+                android:textSize="@dimen/f_14"/>
+
+        </RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fvs_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/mp_10"
+            android:layout_marginRight="@dimen/mp_10"
+            android:background="@color/color_f3f4f6"
+            android:paddingLeft="@dimen/mp_10"
+            android:paddingRight="@dimen/mp_10">
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</android.support.design.widget.CoordinatorLayout>

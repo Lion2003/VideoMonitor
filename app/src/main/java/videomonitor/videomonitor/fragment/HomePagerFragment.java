@@ -2,16 +2,24 @@ package videomonitor.videomonitor.fragment;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.VideoUtils;
@@ -31,6 +39,16 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
     private List<VideoInfo> list;
 
+    private Timer timer;
+    private TimerTask timerTask;
+    public static int position;
+    //==自动轮播
+    private boolean isAuto = true;//默认情况下我们是开启自动轮播
+    private List<ImageView> imgList;
+
+    private FrameLayout flayout;
+    private LinearLayout redDotLayout;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepager, container, false);
@@ -41,6 +59,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         }
         initDate();
 
+        flayout = (FrameLayout) view.findViewById(R.id.fh_frameLayout);
+        redDotLayout = (LinearLayout) view.findViewById(R.id.fh_redDot_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.fh_viewPager);
         mViewPager.setOffscreenPageLimit(siteEntityList.size());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -50,8 +70,21 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
+                HomePagerFragment.position = position;
 
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for(int i = 0; i < siteFgList.size(); i++) {
+                            if(i == position) {
+                                imgList.get(i).setImageResource(R.mipmap.icon_dot_select);
+                            } else {
+                                imgList.get(i).setImageResource(R.mipmap.icon_dot_normal);
+                            }
+                        }
+                    }
+                }, 200);
             }
 
             @Override
@@ -61,15 +94,99 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         });
         SiteAdapter adapter = new SiteAdapter(getChildFragmentManager(), siteFgList);
         mViewPager.setAdapter(adapter);
+        setAutoViewPager();
+
         return view;
     }
+
+    private void setAutoViewPager() {
+        flayout.setVisibility(View.VISIBLE);
+        imgList = new ArrayList<ImageView>();
+        ImageView iv = null;
+        for(int i = 0; i < siteFgList.size(); i++) {
+            if(i == 0) {
+                iv = new ImageView(getActivity());
+                iv.setImageResource(R.mipmap.icon_dot_select);
+                iv.setPadding(0, 0, 10, 0);
+                imgList.add(iv);
+            } else {
+                iv = new ImageView(getActivity());
+                iv.setImageResource(R.mipmap.icon_dot_normal);
+                iv.setPadding(0, 0, 10, 0);
+                imgList.add(iv);
+            }
+            redDotLayout.addView(iv);
+        }
+
+        if(siteFgList.size() > 1) {
+            timer = new Timer();
+            timerTask = new TimerTask() {
+                @Override
+                public void run() {
+                    if(isAuto) {
+                        Message message = new Message();
+                        message.what = 1;
+                        handler.sendMessage(message);
+                    }
+                }
+            };
+            timer.schedule(timerTask, 4000, 6000);
+
+            mViewPager.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    switch(event.getAction()) {
+                        case MotionEvent.ACTION_DOWN://表示的是用户按下的一瞬间
+                            stopAuto();
+                            break;
+                        case MotionEvent.ACTION_MOVE://表示的是用户按下之后，在屏幕上移动的过程
+
+                            break;
+                        case MotionEvent.ACTION_UP://表示的是用户抬起的一瞬间
+                            startAuto();
+                            break;
+                        default:
+
+                            break;
+                    }
+                    return false;//返回true的目的是告诉我们该ViewGroup容器的父View，我们已经处理好了该事件
+                }
+            });
+        }
+    }
+
+    private void startAuto() {
+        isAuto = true;
+    }
+
+    private void stopAuto() {
+        isAuto = false;
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    if(position < siteFgList.size() - 1) {
+                        mViewPager.setCurrentItem(position + 1);
+
+                    } else if(position == siteFgList.size() - 1) {
+                        mViewPager.setCurrentItem(0);
+
+                    }
+                    break;
+            }
+
+        }
+    };
 
     private void initDate() {
         SiteEntity entity = new SiteEntity();
         entity.setSiteNum("站点  13"); //站点
-        entity.setProcessNumber("工序编号 70045"); //工序编号
-        entity.setProcessName("工序名称 暗合门襟"); //工序名称
-        entity.setStandardHour("标准工时 45秒"); //标准工时
+        entity.setProcessNumber("70045"); //工序编号
+        entity.setProcessName("暗合门襟"); //工序名称
+        entity.setStandardHour("45秒"); //标准工时
         entity.setProcessPrice("0.35元/件"); //工序单价
         entity.setTodayPlanNumber("850件"); //今日计划数
         entity.setTodayCompanyNumber("650件"); //今日完成数

@@ -18,10 +18,11 @@
         >
         <requestFocus />
     </AutoCompleteTextView>
+    <!--
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/icon_ioslogo"
         android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/mp_25"/>
+        android:layout_margin="@dimen/mp_25"/> -->
 </RelativeLayout>
