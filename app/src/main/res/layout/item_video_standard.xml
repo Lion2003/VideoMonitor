@@ -9,11 +9,11 @@
     android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mp_192">
+        android:layout_height="@dimen/mp_200">
         <ImageView
             android:id="@+id/ivs_img"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/mp_192"
+            android:layout_height="@dimen/mp_200"
             android:scaleType="fitXY"/>
         <TextView
             android:id="@+id/ivs_duration"

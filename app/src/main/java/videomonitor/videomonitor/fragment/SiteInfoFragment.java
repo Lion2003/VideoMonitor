@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import videomonitor.videomonitor.R;
-import videomonitor.videomonitor.entity.SiteEntity;
+import videomonitor.videomonitor.entity.SiteInfoEntity.ProcessDataBean;
 
 /**
  * 站点信息
@@ -30,14 +30,14 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
     private Button btnBook;
     private Button btnVideo;
 
-    private SiteEntity entity;
+    private ProcessDataBean entity;
     private int position;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_site_info, container, false);
 
-        entity = (SiteEntity) getArguments().getSerializable("entity");
+        entity = (ProcessDataBean) getArguments().getSerializable("entity");
 
         siteNum = (TextView) view.findViewById(R.id.fsi_siteNum); //站点
         processNumber = (TextView) view.findViewById(R.id.fsi_processNumber); //工序编号
@@ -51,15 +51,15 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
         btnBook = (Button) view.findViewById(R.id.fsi_watchBook);
         btnVideo = (Button) view.findViewById(R.id.fsi_watchVideo);
 
-        siteNum.setText(entity.getSiteNum());
-        processNumber.setText(entity.getProcessNumber());
+        siteNum.setText("未知");
+        processNumber.setText(entity.getProcessCode());
         processName.setText(entity.getProcessName());
-        standardHour.setText(entity.getStandardHour());
-        processPrice.setText(entity.getProcessPrice());
-        todayPlanNumber.setText(entity.getTodayPlanNumber());
-        todayCompanyNumber.setText(entity.getTodayCompanyNumber());
-        todayPlanSalary.setText(entity.getTodayPlanSalary());
-        todayGotSalary.setText(entity.getTodayGotSalary());
+        standardHour.setText(entity.getStandardHour() + "秒");
+        processPrice.setText(entity.getUnitPrice() + "元/秒");
+        todayPlanNumber.setText(entity.getPlanNumber() + "件");
+        todayCompanyNumber.setText(entity.getFinishNumber() + "件");
+        todayPlanSalary.setText(entity.getPlanWages() + "元");
+        todayGotSalary.setText(entity.getTakenWages() + "元");
 
         btnBook.setOnClickListener(this);
         btnVideo.setOnClickListener(this);

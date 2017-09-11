@@ -9,15 +9,16 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/mp_35"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginTop="@dimen/mp_8"
-                android:layout_marginBottom="@dimen/mp_8"
+                android:layout_marginLeft="@dimen/mp_20"
                 android:text="站点   "
+                android:textSize="@dimen/f_15"
+                android:textColor="@color/tv_black3"
                 android:drawableLeft="@mipmap/icon_location"
                 android:drawablePadding="@dimen/mp_10"
                 android:gravity="center_vertical"/>
@@ -25,8 +26,8 @@
                 android:id="@+id/fsi_siteNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:text="13"
+                android:textSize="@dimen/f_15"
                 style="@style/textStyle"
                 android:textColor="@color/color_e24a4a"/>
         </LinearLayout>
@@ -34,17 +35,18 @@
             android:layout_width="match_parent"
             android:layout_height="0.5px"
             android:background="@color/voip_interface_text_color"
-            android:layout_marginLeft="@dimen/mp_10"/>
+            android:layout_marginLeft="@dimen/mp_20"
+            android:layout_marginRight="@dimen/mp_20"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/mp_17"
+            android:layout_marginBottom="@dimen/mp_17">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginTop="@dimen/mp_8"
-                android:layout_marginBottom="@dimen/mp_8"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -77,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginBottom="@dimen/mp_8"
+                android:layout_marginTop="@dimen/mp_17"
                 android:orientation="horizontal">
                 <TextView
                     android:layout_width="0dp"
@@ -116,18 +118,19 @@
             android:layout_width="match_parent"
             android:layout_height="0.5px"
             android:background="@color/voip_interface_text_color"
-            android:layout_marginLeft="@dimen/mp_10"/>
+            android:layout_marginLeft="@dimen/mp_20"
+            android:layout_marginRight="@dimen/mp_20"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/mp_17"
+            android:layout_marginBottom="@dimen/mp_17">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginTop="@dimen/mp_8"
-                android:layout_marginBottom="@dimen/mp_8">
+                android:layout_marginLeft="@dimen/mp_15">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -160,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginBottom="@dimen/mp_8">
+                android:layout_marginTop="@dimen/mp_17">
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -180,7 +183,7 @@
                     android:layout_weight="1"
                     android:text="今日已拿工资"
                     style="@style/textStyle"
-                    android:textColor="@color/color_e24a4a"/>
+                    android:textColor="@color/color_FE2525"/>
                 <TextView
                     android:id="@+id/fsi_todayGotSalary"
                     android:layout_width="0dp"
@@ -188,7 +191,7 @@
                     android:layout_weight="1"
                     android:text="227.5元"
                     style="@style/textStyle"
-                    android:textColor="@color/color_e24a4a"/>
+                    android:textColor="@color/color_FE2525"/>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -198,20 +201,22 @@
             <Button
                 android:id="@+id/fsi_watchBook"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/mp_50"
                 android:paddingLeft="@dimen/mp_10"
                 android:paddingRight="@dimen/mp_10"
                 android:text="全屏看作业指导书"
                 style="@style/textStyle"
                 android:background="@drawable/em_button_login_bg"
+                android:textSize="@dimen/f_18"
                 android:textColor="@color/white"/>
             <Button
                 android:id="@+id/fsi_watchVideo"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="@dimen/mp_50"
                 android:text="查看标准视频"
                 style="@style/textStyle"
                 android:background="@drawable/em_button_login_bg"
+                android:textSize="@dimen/f_18"
                 android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/mp_20"
                 android:paddingLeft="@dimen/mp_20"

@@ -1,5 +1,6 @@
 package videomonitor.videomonitor.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import com.boredream.bdvideoplayer.utils.DisplayUtils;
 import com.bumptech.glide.Glide;
 
 import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.activity.FullScreenActivity;
 import videomonitor.videomonitor.entity.VideoDetailInfo;
 
 /**
@@ -53,7 +55,10 @@ public class VideoPlayerJCFragment extends Fragment {
 
             @Override
             public void onFullScreen() {
-//                DisplayUtils.toggleScreenOrientation(VideoDetailActivity.this);
+//                DisplayUtils.toggleScreenOrientation(getActivity());
+                Intent it = new Intent(getActivity(), FullScreenActivity.class);
+                it.putExtra("videoUrl", videoUrl);
+                startActivity(it);
             }
         });
 //        info.videoPath = "/mnt/sdcard/Movies/1/1.mp4";

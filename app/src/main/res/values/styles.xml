@@ -18,7 +18,8 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="textStyle">
-        <item name="android:textSize">@dimen/f_13</item>
+        <item name="android:textSize">@dimen/f_14</item>
+        <item name="android:textColor">@color/color_666666</item>
     </style>
 
     <style name="popwin_anim_style">

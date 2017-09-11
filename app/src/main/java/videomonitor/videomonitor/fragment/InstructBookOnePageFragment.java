@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.widget.ZoomImageView;
 
 /**
@@ -15,16 +16,19 @@ import videomonitor.videomonitor.widget.ZoomImageView;
  */
 
 public class InstructBookOnePageFragment extends Fragment {
+    private View view;
+    private ZoomImageView zoomImageView;
     private Bitmap bmp;
     private int source;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_instruct_book_onepage, container, false);
+        zoomImageView = (ZoomImageView) view.findViewById(R.id.fibo_zoomImageView);
         source = getArguments().getInt("source");
         bmp = BitmapFactory.decodeResource(getResources(), source);
-        ZoomImageView imageView = new ZoomImageView(getActivity());
-        imageView.setImageBitmap(bmp);
+        zoomImageView.setImageBitmap(bmp);
 
-        return imageView;
+        return view;
     }
 }

@@ -41,8 +41,13 @@ public class MineFragment extends Fragment {
                     case R.id.fm_myNews:
                         setFragment("我的消息");
                         break;
+                    case R.id.fm_feedback:
+                        setFragment("意见反馈");
+                        break;
                     case R.id.fm_myBasicSettings:
-                        setFragment("基本设置");
+//                        setFragment("基本设置");
+                        getChildFragmentManager().beginTransaction()
+                                .replace(R.id.fm_linearLayout, new BaseSettingFragment()).commit();
                         break;
                     default:
 

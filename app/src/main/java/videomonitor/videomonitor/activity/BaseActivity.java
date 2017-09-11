@@ -18,6 +18,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.utils.StatusBarUtils;
+
 @SuppressLint("Registered")
 public class BaseActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         //接入了环信之后，状态栏变成白色，无法通过配置问价改为别的颜色。这里先用一下方式实现状态栏颜色改变。
-//        StatusBarUtils.setWindowStatusBarColor(this, R.color.status_bar_color);
+        StatusBarUtils.setWindowStatusBarColor(this, R.color.status_bar_color);
     }
 
     @Override

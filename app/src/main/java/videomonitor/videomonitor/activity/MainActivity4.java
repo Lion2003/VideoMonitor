@@ -17,6 +17,7 @@ import videomonitor.videomonitor.fragment.InstructBookFragment;
 import videomonitor.videomonitor.fragment.InstructionBookListFragment;
 import videomonitor.videomonitor.fragment.MineFragment;
 import videomonitor.videomonitor.fragment.VideoStandardFragment;
+import videomonitor.videomonitor.utils.StringUtil;
 
 @SuppressLint("NewApi")
 public class MainActivity4 extends BaseActivity {
@@ -36,11 +37,18 @@ public class MainActivity4 extends BaseActivity {
     // user account was removed
     private boolean isCurrentAccountRemoved = false;
 
+    private String CURRENT_ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main4);
+
+        CURRENT_ID = getIntent().getStringExtra("CURRENT_ID").trim();
+        if(StringUtil.isEmpty(CURRENT_ID)) {
+            CURRENT_ID = "2007001023";
+        }
 
         initView();
 
@@ -48,6 +56,10 @@ public class MainActivity4 extends BaseActivity {
         videoStandardFragment = new VideoStandardFragment();
         instructBookFragment = new InstructionBookListFragment();
         mineFragment = new MineFragment();
+
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("CURRENT_ID", CURRENT_ID);
+        homePagerFragment.setArguments(bundle1);
 
         Bundle bundle3 = new Bundle();
         bundle3.putBoolean("isShowTitle", true);

@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
+        getWindow().addFlags(flags);
         // 隐藏标题栏
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // 隐藏状态栏

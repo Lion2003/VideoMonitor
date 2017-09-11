@@ -75,6 +75,7 @@
     <dimen name="mp_80">80dp</dimen>
     <dimen name="mp_90">90dp</dimen>
     <dimen name="mp_100">100dp</dimen>
+    <dimen name="mp_120">120dp</dimen>
     <dimen name="mp_155">155dp</dimen>
     <dimen name="mp_172">172dp</dimen>
     <dimen name="mp_192">192dp</dimen>
@@ -82,6 +83,7 @@
     <dimen name="mp_215">215dp</dimen>
     <dimen name="mp_250">250dp</dimen>
     <dimen name="mp_258">258dp</dimen>
+    <dimen name="mp_312">312dp</dimen>
     <!-- 文字的大小  -->
     <dimen name="f_5">5sp</dimen>
     <dimen name="f_10">10sp</dimen>

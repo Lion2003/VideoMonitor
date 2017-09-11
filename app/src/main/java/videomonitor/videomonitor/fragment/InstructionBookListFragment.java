@@ -42,7 +42,7 @@ import videomonitor.videomonitor.entity.VideoEntity;
 
 public class InstructionBookListFragment extends Fragment {
     private View view;
-    private AppBarLayout appBarLayout;
+    private LinearLayout appBarLayout;
     private SwipeRefreshLayout srl;
     private RecyclerView mRecyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -68,7 +68,7 @@ public class InstructionBookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_instruction_book_list, container, false);
-        appBarLayout = (AppBarLayout) view.findViewById(R.id.fibl_title);
+        appBarLayout = (LinearLayout) view.findViewById(R.id.fibl_title);
         isShowTitle = getArguments().getBoolean("isShowTitle", true);
         if(isShowTitle) {
             appBarLayout.setVisibility(View.VISIBLE);
