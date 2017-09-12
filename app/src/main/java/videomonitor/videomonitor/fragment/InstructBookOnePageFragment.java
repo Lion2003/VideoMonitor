@@ -19,14 +19,14 @@ public class InstructBookOnePageFragment extends Fragment {
     private View view;
     private ZoomImageView zoomImageView;
     private Bitmap bmp;
-    private int source;
+    private String source;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_instruct_book_onepage, container, false);
         zoomImageView = (ZoomImageView) view.findViewById(R.id.fibo_zoomImageView);
-        source = getArguments().getInt("source");
-        bmp = BitmapFactory.decodeResource(getResources(), source);
+        source = getArguments().getString("source");
+        bmp = BitmapFactory.decodeFile(source);
         zoomImageView.setImageBitmap(bmp);
 
         return view;

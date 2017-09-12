@@ -1,11 +1,13 @@
 package videomonitor.videomonitor.entity;
 
+import java.io.Serializable;
+
 /**
  * 缝纫机信息实体类
  * Created by Administrator on 2017-09-08.
  */
 
-public class SewingInfoEntity {
+public class SewingInfoEntity implements Serializable {
 
     private String Code; //设备编号
     private String ModelNo; //型号

@@ -12,6 +12,7 @@ import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.entity.VideoDetailInfo;
 
 /**
+ * 全屏播放视频
  * Created by Administrator on 2017-09-11.
  */
 

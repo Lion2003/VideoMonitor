@@ -1,10 +1,12 @@
 package videomonitor.videomonitor.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2017-09-08.
  */
 
-public class ProductOrderInfoEntity {
+public class ProductOrderInfoEntity implements Serializable {
 
     private String PoCode; //生产单
     private String PatternNo; //款号

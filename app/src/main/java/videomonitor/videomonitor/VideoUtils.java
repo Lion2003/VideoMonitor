@@ -95,4 +95,19 @@ public class VideoUtils {
         return list;
     }
 
+    public static String checkContainVideo(List<VideoInfo> list, String id) {
+        String path = "";
+        for(int i = 0; i < list.size(); i++) {
+            if(list.get(i).displayName.contains(id)) {
+//                if(list.get(i).displayName.split(".")[0].equals(id)) {
+                    path = list.get(i).filePath;
+                    break;
+//                }
+            } else {
+                path = "";
+            }
+        }
+        return path;
+    }
+
 }

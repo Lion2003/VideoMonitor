@@ -19,12 +19,14 @@
         android:layout_height="match_parent">
         <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:background="@color/white">
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="@color/white">
                 <TextView
                     android:layout_width="@dimen/mp_258"
                     android:layout_height="@dimen/mp_70"
@@ -39,7 +41,6 @@
                     android:textSize="@dimen/f_16"
                     android:textColor="@color/str_color_black"
                     android:background="@color/white"/>
-                @color/theme_text_blackdark/>
                 <RadioGroup
                     android:id="@+id/fm_radioGroup"
                     android:layout_width="@dimen/mp_258"

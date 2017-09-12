@@ -18,12 +18,20 @@ public class ShareUtils {
      * @param sewingId 缝纫机ID
      * @param siteId 站点ID
      */
-    public static void saveInfo(Context context, String productOrderId, String sewingId, String siteId) {
+    public static void saveInfo(Context context, int machineType, String productOrderId, String sewingId, String siteId) {
         SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("type", machineType);
         editor.putString("productOrderId", productOrderId);
         editor.putString("sewingId", sewingId);
         editor.putString("siteId", siteId);
+        editor.commit();
+    }
+
+    public static void setMachineType(Context context, int machineType) {
+        SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("type", machineType);
         editor.commit();
     }
 
@@ -62,7 +70,13 @@ public class ShareUtils {
 
     public static String getSiteId(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        String id=preferences.getString("siteId", "70045");
+        String id=preferences.getString("siteId", "13");
+        return id;
+    }
+
+    public static int getMachineType(Context context) {
+        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        int id=preferences.getInt("type", 1);
         return id;
     }
 

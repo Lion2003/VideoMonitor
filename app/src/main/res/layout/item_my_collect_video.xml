@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:easeimageview="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -11,11 +12,13 @@
         android:id="@+id/imcv_relativeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <ImageView
+        <videomonitor.videomonitor.widget.EaseImageView
             android:id="@+id/ivs_img"
             android:layout_width="@dimen/mp_172"
             android:layout_height="@dimen/mp_155"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            easeimageview:ease_shape_type="rectangle"
+            easeimageview:ease_radius="@dimen/mp_3"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/ivs_title"
@@ -23,6 +26,8 @@
         android:layout_height="@dimen/mp_50"
         android:layout_marginLeft="@dimen/mp_10"
         android:layout_below="@+id/imcv_relativeLayout"
+        android:layout_alignLeft="@+id/imcv_relativeLayout"
+        android:layout_alignRight="@+id/imcv_relativeLayout"
         android:textSize="@dimen/f_13"
         android:textColor="@color/color_666666"
         android:gravity="center_vertical"

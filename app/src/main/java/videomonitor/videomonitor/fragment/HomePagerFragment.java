@@ -1,5 +1,6 @@
 package videomonitor.videomonitor.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -28,16 +30,20 @@ import java.util.TimerTask;
 
 import okhttp3.Call;
 import okhttp3.Request;
+import videomonitor.videomonitor.ImageUtils;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.VideoUtils;
+import videomonitor.videomonitor.activity.FullScreenBookActivity;
 import videomonitor.videomonitor.adapter.SiteAdapter;
 import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.db.ShareUtils;
+import videomonitor.videomonitor.entity.ImageInfo;
 import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
 import videomonitor.videomonitor.entity.SewingInfoEntity;
-import videomonitor.videomonitor.entity.SiteEntity;
 import videomonitor.videomonitor.entity.SiteInfoEntity;
 import videomonitor.videomonitor.entity.VideoInfo;
+import videomonitor.videomonitor.utils.ACache;
+import videomonitor.videomonitor.utils.StringUtil;
 
 /**
  * Created by Administrator on 2017-08-31.
@@ -50,10 +56,14 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 //    private List<SiteEntity> siteEntityList = new ArrayList<SiteEntity>();
 
     private List<VideoInfo> list;
+    private List<ImageInfo> imageList;
 
     private TextView currentId;
 
+    private ACache mCache;
+
     //生产单信息
+    private ProductOrderInfoEntity productOrderEntity;
     private TextView poCode; //生产单
     private TextView patternNo; //款号
     private TextView customer; //客户
@@ -62,6 +72,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     private TextView amount; //数量
 
     //缝纫机信息
+    private SewingInfoEntity sewingEntity;
     private TextView code; //设备编号
     private TextView modelNo; //型号
     private TextView thisBootTime; //本次开机时间
@@ -74,12 +85,16 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     private TextView sumPresserNum; //累计压脚抬起数
     private TextView speed; //当前转速
 
+    //站点信息
+    private SiteInfoEntity siteInfoEntity;
+
+
     private Timer timer;
     private TimerTask timerTask;
     public static int position;
     //==自动轮播
     private boolean isAuto = true;//默认情况下我们是开启自动轮播
-    private List<ImageView> imgList;
+    private List<ImageView> imgList = new ArrayList<ImageView>();
 
     private FrameLayout flayout;
     private LinearLayout redDotLayout;
@@ -88,11 +103,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepager, container, false);
 
-        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/Movies"));//  /DCIM/Video   /Movies/1
-        if(list == null || list.size() == 0) {
-            list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM/Video"));
-        }
-//        initDate();
+        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
+        imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
 
         currentId = (TextView) view.findViewById(R.id.current_id);
         String id =  getArguments().getString("CURRENT_ID", "2017001023");
@@ -124,6 +136,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         redDotLayout = (LinearLayout) view.findViewById(R.id.fh_redDot_layout);
         mViewPager = (ViewPager) view.findViewById(R.id.fh_viewPager);
 
+        getCache();
+
         getProductionOrderInfo(Constant.productOrderInfoUrl, ShareUtils.getProductOrderId(getActivity()));
         getSweingOrderInfo(Constant.sweingInfoUrl, ShareUtils.getSewingId(getActivity()));
         getSiteInfo(Constant.siteInfoUrl, ShareUtils.getSiteId(getActivity()));
@@ -133,7 +147,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
     private void setAutoViewPager() {
         flayout.setVisibility(View.VISIBLE);
-        imgList = new ArrayList<ImageView>();
+        redDotLayout.removeAllViews();
+        imgList.clear();
         ImageView iv = null;
         for(int i = 0; i < siteFgList.size(); i++) {
             if(i == 0) {
@@ -213,50 +228,6 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         }
     };
 
-//    private void initDate() {
-//        SiteEntity entity = new SiteEntity();
-//        entity.setSiteNum(" 13"); //站点
-//        entity.setProcessNumber("70045"); //工序编号
-//        entity.setProcessName("暗合门襟"); //工序名称
-//        entity.setStandardHour("45秒"); //标准工时
-//        entity.setProcessPrice("0.35元/件"); //工序单价
-//        entity.setTodayPlanNumber("850件"); //今日计划数
-//        entity.setTodayCompanyNumber("650件"); //今日完成数
-//        entity.setTodayPlanSalary("297.5元"); //今日计划工资
-//        entity.setTodayGotSalary("227.5元"); //今日已拿工资
-//        entity.setBookUrl(R.mipmap.icon_zyzds);
-//        entity.setVideoUrl(list.get(0).filePath);
-//        siteEntityList.add(entity);
-//        SiteInfoFragment fragment = new SiteInfoFragment();
-//        fragment.setOnVideoBookListener(this);
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable("entity", entity);
-//        bundle.putInt("position", 0);
-//        fragment.setArguments(bundle);
-//        siteFgList.add(fragment);
-//
-//        SiteEntity entity1 = new SiteEntity();
-//        entity1.setSiteNum(" 14"); //站点
-//        entity1.setProcessNumber("工序编号 70046"); //工序编号
-//        entity1.setProcessName("工序名称 挂钩垫布"); //工序名称
-//        entity1.setStandardHour("标准工时 40秒"); //标准工时
-//        entity1.setProcessPrice("0.4元/件"); //工序单价
-//        entity1.setTodayPlanNumber("750件"); //今日计划数
-//        entity1.setTodayCompanyNumber("650件"); //今日完成数
-//        entity1.setTodayPlanSalary("300.5元"); //今日计划工资
-//        entity1.setTodayGotSalary("270.5元"); //今日已拿工资
-//        entity1.setBookUrl(R.mipmap.icon_zyzds1);
-//        entity1.setVideoUrl(list.get(1).filePath);
-//        siteEntityList.add(entity1);
-//        SiteInfoFragment fragment1 = new SiteInfoFragment();
-//        fragment1.setOnVideoBookListener(this);
-//        Bundle bundle1 = new Bundle();
-//        bundle1.putSerializable("entity", entity1);
-//        bundle1.putInt("position", 1);
-//        fragment1.setArguments(bundle1);
-//        siteFgList.add(fragment1);
-//    }
-
     VideoPlayerJCFragment videoFragment;
     @Override
     public void videoListener(String videoUrl, int position) {
@@ -266,29 +237,43 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             videoFragment = null;
         }
         videoFragment = new VideoPlayerJCFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("videoUrl", videoUrl);
-        videoFragment.setArguments(bundle);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.fh_linearlayout, videoFragment)
-                .commit();
+        String path = VideoUtils.checkContainVideo(list, videoUrl);
+        if(!StringUtil.isEmpty(path)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoUrl", path);
+            videoFragment.setArguments(bundle);
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fh_linearlayout, videoFragment)
+                    .commit();
+        } else {
+            Toast.makeText(getActivity(), "无此视频", Toast.LENGTH_SHORT).show();
+        }
     }
 
     InstructBookOnePageFragment bookFragment;
     @Override
-    public void bookListener(int bookUrl, int position) {
+    public void bookListener(String bookUrl, int position) {
         if(videoFragment != null) {
             videoFragment.getBDView().onStop();
             videoFragment.getBDView().onDestroy();
             videoFragment = null;
         }
         bookFragment = new InstructBookOnePageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("source", bookUrl);
-        bookFragment.setArguments(bundle);
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.fh_linearlayout, bookFragment)
-                .commit();
+        String path = ImageUtils.checkContainImage(imageList, bookUrl);
+        if(!StringUtil.isEmpty(path)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("source", path);
+            bookFragment.setArguments(bundle);
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fh_linearlayout, bookFragment)
+                    .commit();
+
+            Intent it = new Intent(getActivity(), FullScreenBookActivity.class);
+            it.putExtra("source", path);
+            startActivity(it);
+        } else {
+            Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -326,19 +311,23 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         @Override
         public void onResponse(String response, int id) {
             Gson gson = new Gson();
-            ProductOrderInfoEntity entity = gson.fromJson(response, ProductOrderInfoEntity.class);
-            poCode.setText("生产单  " + entity.getPoCode()); //生产单
-            patternNo.setText("款号  " + entity.getPatternNo()); //款号
-            customer.setText("顾客  " + entity.getCustomer()); //客户
-            color.setText("颜色  " + entity.getColor()); //颜色
-            size.setText("尺码  " + entity.getSize()); //尺码
-            amount.setText("数量  " + entity.getAmount()); //数量
+            productOrderEntity = gson.fromJson(response, ProductOrderInfoEntity.class);
+            setProductOrderInfo(productOrderEntity);
         }
 
         @Override
         public void inProgress(float progress, long total, int id) {
 //            mProgressBar.setProgress((int) (100 * progress));
         }
+    }
+
+    private void setProductOrderInfo(ProductOrderInfoEntity productOrderEntity) {
+        poCode.setText("生产单  " + productOrderEntity.getPoCode()); //生产单
+        patternNo.setText("款号  " + productOrderEntity.getPatternNo()); //款号
+        customer.setText("顾客  " + productOrderEntity.getCustomer()); //客户
+        color.setText("颜色  " + productOrderEntity.getColor()); //颜色
+        size.setText("尺码  " + productOrderEntity.getSize()); //尺码
+        amount.setText("数量  " + productOrderEntity.getAmount()); //数量
     }
 
     /**
@@ -374,24 +363,28 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         @Override
         public void onResponse(String response, int id) {
             Gson gson = new Gson();
-            SewingInfoEntity entity = gson.fromJson(response, SewingInfoEntity.class);
-            code.setText(entity.getCode()); //设备编号
-            modelNo.setText(entity.getModelNo()); //型号
-            thisBootTime.setText(entity.getThisBootTime() +  "分钟"); //本次开机时间
-            sumBootTime.setText(entity.getSumBootTime() + "小时"); //累计开机时间
-            pinNum.setText(entity.getPinNum() + "针"); //本次开机针数
-            sumPinNum.setText(entity.getSumPinNum()); //累计开机针数
-            cutLineNum.setText(entity.getCutLineNum() + "次"); //本次切线数
-            sumCutLineNum.setText(entity.getSumCutLineNum() + "次"); //累计切线数
-            presserNum.setText(entity.getPresserNum() + "次"); //本次压脚抬起数
-            sumPresserNum.setText(entity.getSumPresserNum() + "次"); //累计压脚抬起数
-            speed.setText(entity.getSpeed() + "RPM"); //当前转速
+            sewingEntity = gson.fromJson(response, SewingInfoEntity.class);
+            setSewingInfo(sewingEntity);
         }
 
         @Override
         public void inProgress(float progress, long total, int id) {
 //            mProgressBar.setProgress((int) (100 * progress));
         }
+    }
+
+    private void setSewingInfo(SewingInfoEntity sewingEntity) {
+        code.setText(sewingEntity.getCode()); //设备编号
+        modelNo.setText(sewingEntity.getModelNo()); //型号
+        thisBootTime.setText(sewingEntity.getThisBootTime() +  "分钟"); //本次开机时间
+        sumBootTime.setText(sewingEntity.getSumBootTime() + "小时"); //累计开机时间
+        pinNum.setText(sewingEntity.getPinNum() + "针"); //本次开机针数
+        sumPinNum.setText(sewingEntity.getSumPinNum()); //累计开机针数
+        cutLineNum.setText(sewingEntity.getCutLineNum() + "次"); //本次切线数
+        sumCutLineNum.setText(sewingEntity.getSumCutLineNum() + "次"); //累计切线数
+        presserNum.setText(sewingEntity.getPresserNum() + "次"); //本次压脚抬起数
+        sumPresserNum.setText(sewingEntity.getSumPresserNum() + "次"); //累计压脚抬起数
+        speed.setText(sewingEntity.getSpeed() + "RPM"); //当前转速
     }
 
     /**
@@ -426,8 +419,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
         @Override
         public void onResponse(String response, int id) {
-            SiteInfoEntity entity = new Gson().fromJson(response, SiteInfoEntity.class);
-            setData(entity);
+            siteInfoEntity = new Gson().fromJson(response, SiteInfoEntity.class);
+            setSiteInfo(siteInfoEntity);
         }
 
         @Override
@@ -436,11 +429,12 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         }
     }
 
-    private void setData(SiteInfoEntity entity) {
+    private void setSiteInfo(SiteInfoEntity entity) {
+        siteFgList.clear();
         if(entity.getProcessData() != null && entity.getProcessData().size() > 0) {
             for(int i = 0; i < entity.getProcessData().size(); i++) {
-                entity.getProcessData().get(i).setBookUrl(R.mipmap.icon_zyzds1);
-                entity.getProcessData().get(i).setVideoUrl(list.get(i).filePath);
+//                entity.getProcessData().get(i).setBookUrl(R.mipmap.icon_zyzds1);
+//                entity.getProcessData().get(i).setVideoUrl(list.get(i).filePath);
                 SiteInfoFragment fragment1 = new SiteInfoFragment();
                 fragment1.setOnVideoBookListener(this);
                 Bundle bundle1 = new Bundle();
@@ -485,10 +479,76 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
             setAutoViewPager();
 
-            bookListener(entity.getProcessData().get(0).getBookUrl(), 0);
+//            bookListener(entity.getProcessData().get(0).getBookUrl(), 0);
+
+//            if(videoFragment != null) {
+//                videoFragment.getBDView().onStop();
+//                videoFragment.getBDView().onDestroy();
+//                videoFragment = null;
+//            }
+//            bookFragment = new InstructBookOnePageFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putInt("source", entity.getProcessData().get(0).getBookUrl());
+//            bookFragment.setArguments(bundle);
+//            getChildFragmentManager().beginTransaction()
+//                    .replace(R.id.fh_linearlayout, bookFragment)
+//                    .commit();
+
+            if(videoFragment != null) {
+                videoFragment.getBDView().onStop();
+                videoFragment.getBDView().onDestroy();
+                videoFragment = null;
+            }
+
+            bookFragment = new InstructBookOnePageFragment();
+            String path = ImageUtils.checkContainImage(imageList, entity.getProcessData().get(0).getProcessCode());
+            if(!StringUtil.isEmpty(path)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("source", path);
+                bookFragment.setArguments(bundle);
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.fh_linearlayout, bookFragment)
+                        .commit();
+            } else {
+                Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
+            }
 
         }
 
     }
+
+    private void getCache() {
+        mCache = ACache.get(getActivity());
+        productOrderEntity = (ProductOrderInfoEntity) mCache.getAsObject(Constant.productOrderCache);
+        if(productOrderEntity != null) {
+            //获取生产单信息缓存
+            setProductOrderInfo(productOrderEntity);
+        }
+
+        sewingEntity = (SewingInfoEntity) mCache.getAsObject(Constant.sewingInfoCache);
+        if(sewingEntity != null) {
+            //获取生产单信息缓存
+            setSewingInfo(sewingEntity);
+        }
+
+        siteInfoEntity = (SiteInfoEntity) mCache.getAsObject(Constant.siteInfoCache);
+        if(siteInfoEntity != null) {
+            //获取生产单信息缓存
+            setSiteInfo(siteInfoEntity);
+        }
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCache.put(Constant.productOrderCache, productOrderEntity);
+        mCache.put(Constant.sewingInfoCache, sewingEntity);
+        mCache.put(Constant.siteInfoCache, siteInfoEntity);
+
+//        ACache mCache = ACache.get(this);
+//        mCache.remove(Constant.showingFilmDB);
+    }
+
 
 }

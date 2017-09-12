@@ -71,10 +71,10 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fsi_watchBook:
-                listener.bookListener(entity.getBookUrl(), position);
+                listener.bookListener(entity.getProcessCode(), position);
                 break;
             case R.id.fsi_watchVideo:
-                listener.videoListener(entity.getVideoUrl(), position);
+                listener.videoListener(entity.getProcessCode(), position);
                 break;
         }
     }
@@ -84,6 +84,6 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
     }
     public interface VideoBookListener{
         void videoListener(String videoUrl, int position);
-        void bookListener(int bookUrl, int position);
+        void bookListener(String bookUrl, int position);
     }
 }

@@ -5,6 +5,23 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/mp_10"
     android:background="@color/white">
+    <RadioGroup
+        android:id="@+id/fbs_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/fbs_bfj">
+        <RadioButton
+            android:id="@+id/fbs_bfj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="包缝机"/>
+        <RadioButton
+            android:id="@+id/fbs_pfj"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="平缝机"/>
+    </RadioGroup>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -12,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="缝纫机编号："/>
+            android:text="生产单编号："/>
         <EditText
             android:id="@+id/producOrderId"
             android:layout_width="300dp"

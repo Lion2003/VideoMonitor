@@ -17,6 +17,7 @@ import videomonitor.videomonitor.activity.FullScreenActivity;
 import videomonitor.videomonitor.entity.VideoDetailInfo;
 
 /**
+ * 播放视频
  * Created by Administrator on 2017-08-31.
  */
 
@@ -70,4 +71,5 @@ public class VideoPlayerJCFragment extends Fragment {
     public BDVideoView getBDView() {
         return videoView;
     }
+
 }
