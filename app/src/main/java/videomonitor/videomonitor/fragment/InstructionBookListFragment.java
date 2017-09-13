@@ -208,7 +208,7 @@ public class InstructionBookListFragment extends Fragment {
         InstructionBookEntity entity;
         for(int i = 0; i < mVideoList.size(); i++) {
             entity = new InstructionBookEntity();
-            entity.setTechnologyId("70045");
+            entity.setTechnologyId(mVideoList.get(i).title);
             entity.setTechnologyName("暗合门襟腰头挂钩");
             entity.setSrc(R.mipmap.icon_zyzds1);
             mList.add(entity);

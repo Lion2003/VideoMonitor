@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/mp_10"
     android:background="@color/white">
+
     <RadioGroup
         android:id="@+id/fbs_radioGroup"
         android:layout_width="wrap_content"
@@ -25,17 +26,38 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="生产单编号："/>
-        <EditText
-            android:id="@+id/producOrderId"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:hint="生产单编号"
-            android:textSize="@dimen/f_14"/>
+            android:text="生产单信息："/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <EditText
+                android:id="@+id/producOrderId"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:hint="生产单编号"
+                android:textSize="@dimen/f_14"
+                android:focusable="true"/>
+            <EditText
+                android:id="@+id/color"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:hint="颜色"
+                android:textSize="@dimen/f_14"
+                android:focusable="true"/>
+            <Spinner
+                android:id="@+id/size"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:entries="@array/size_labels"/>
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -50,7 +72,8 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:hint="输入缝纫机编号"
-            android:textSize="@dimen/f_14"/>
+            android:textSize="@dimen/f_14"
+            android:focusable="true"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -65,7 +88,8 @@
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:hint="站点编号"
-            android:textSize="@dimen/f_14"/>
+            android:textSize="@dimen/f_14"
+            android:focusable="true"/>
     </LinearLayout>
     <Button
         android:id="@+id/save"

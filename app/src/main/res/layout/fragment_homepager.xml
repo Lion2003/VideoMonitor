@@ -3,49 +3,55 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mp_44"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@color/white">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_logo_yas"
-            android:layout_marginLeft="@dimen/mp_20"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="广州亿澳斯软件股份公司"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_logo_fs"
-            android:layout_marginLeft="@dimen/mp_20"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="上海富山精密机械科技有限公司"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_logo_js"
-            android:layout_marginLeft="@dimen/mp_20"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="深圳市嘉胜实业有限公司"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/icon_logo_bl"
-            android:layout_marginLeft="@dimen/mp_20"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="江苏联领智能科技股份有限公司"/>
-    </LinearLayout>
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/mp_50"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/white">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_logo_yas"
+                android:layout_marginLeft="@dimen/mp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="广州亿澳斯软件股份公司"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_logo_fs"
+                android:layout_marginLeft="@dimen/mp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上海富山精密机械科技有限公司"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_logo_js"
+                android:layout_marginLeft="@dimen/mp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="深圳市嘉胜实业有限公司"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_logo_bl"
+                android:layout_marginLeft="@dimen/mp_20"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="江苏联领智能科技股份有限公司"/>
+        </LinearLayout>
+    </HorizontalScrollView>
+
     <LinearLayout 
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -66,28 +72,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/mp_120"
                     android:gravity="center_horizontal"
-                    android:padding="@dimen/mp_8"
+                    android:paddingTop="@dimen/mp_8"
+                    android:paddingBottom="@dimen/mp_8"
+                    android:paddingLeft="@dimen/mp_30"
+                    android:paddingRight="@dimen/mp_30"
                     android:orientation="vertical"
                     android:background="@color/white">
+                    <ImageView
+                        android:layout_width="@dimen/mp_54"
+                        android:layout_height="@dimen/mp_54"
+                        android:src="@mipmap/icon_avatar"/>
                     <TextView
+                        android:id="@+id/fh_userName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawableTop="@mipmap/ic_launcher"
                         android:text="姓名  何丽娟"
                         style="@style/textStyle"
                         android:textSize="@dimen/f_14"
                         android:textColor="@color/tv_black3"
+                        android:layout_marginTop="@dimen/mp_5"
                         android:gravity="center"/>
                     <TextView
                         android:id="@+id/current_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:text="工号 2017001023"
                         style="@style/textStyle"
                         android:textSize="@dimen/f_14"
                         android:textColor="@color/tv_black3"
+                        android:layout_marginTop="@dimen/mp_5"
                         android:gravity="center"/>
                 </LinearLayout>
                 <LinearLayout
@@ -120,8 +133,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/mp_10"
-                            android:layout_marginRight="@dimen/mp_10">
+                            android:layout_marginLeft="@dimen/mp_20"
+                            android:layout_marginRight="@dimen/mp_20">
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"

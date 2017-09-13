@@ -18,11 +18,14 @@ public class ShareUtils {
      * @param sewingId 缝纫机ID
      * @param siteId 站点ID
      */
-    public static void saveInfo(Context context, int machineType, String productOrderId, String sewingId, String siteId) {
+    public static void saveInfo(Context context, int machineType, String productOrderId,
+                                String color, String size, String sewingId, String siteId) {
         SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt("type", machineType);
         editor.putString("productOrderId", productOrderId);
+        editor.putString("color", color);
+        editor.putString("size", size);
         editor.putString("sewingId", sewingId);
         editor.putString("siteId", siteId);
         editor.commit();
@@ -56,6 +59,20 @@ public class ShareUtils {
         editor.commit();
     }
 
+    public static void setColor(Context context, String color) {
+        SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("color", color);
+        editor.commit();
+    }
+
+    public static void setSize(Context context, String size) {
+        SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("size", size);
+        editor.commit();
+    }
+
     public static String getProductOrderId(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
         String id=preferences.getString("productOrderId", "D293-HR");
@@ -77,6 +94,18 @@ public class ShareUtils {
     public static int getMachineType(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
         int id=preferences.getInt("type", 1);
+        return id;
+    }
+
+    public static String getColor(Context context) {
+        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        String id=preferences.getString("color", "黄色");
+        return id;
+    }
+
+    public static String getSize(Context context) {
+        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        String id=preferences.getString("size", "S");
         return id;
     }
 

@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ import videomonitor.videomonitor.activity.FullScreenBookActivity;
 import videomonitor.videomonitor.adapter.SiteAdapter;
 import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.db.ShareUtils;
+import videomonitor.videomonitor.entity.EmpInfoEntity;
 import videomonitor.videomonitor.entity.ImageInfo;
 import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
 import videomonitor.videomonitor.entity.SewingInfoEntity;
@@ -52,12 +55,15 @@ import videomonitor.videomonitor.utils.StringUtil;
 public class HomePagerFragment extends Fragment implements SiteInfoFragment.VideoBookListener {
     private View view;
     private ViewPager mViewPager;
+    private boolean isTimerStart = false;//防止获取缓存的时候启动一次，调用接口再启动一次。
     private List<SiteInfoFragment> siteFgList = new ArrayList<SiteInfoFragment>();
 //    private List<SiteEntity> siteEntityList = new ArrayList<SiteEntity>();
 
     private List<VideoInfo> list;
     private List<ImageInfo> imageList;
 
+    //用户信息
+    private TextView userName;
     private TextView currentId;
 
     private ACache mCache;
@@ -102,10 +108,15 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepager, container, false);
+        EmpInfoEntity en = (EmpInfoEntity)getArguments().getSerializable(EmpInfoEntity.class.getSimpleName());
 
-        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
-        imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
+        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
+        imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
 
+        userName = (TextView) view.findViewById(R.id.fh_userName);
+        if(en != null) {
+            userName.setText("姓名  " + en.getName());
+        }
         currentId = (TextView) view.findViewById(R.id.current_id);
         String id =  getArguments().getString("CURRENT_ID", "2017001023");
         currentId.setText("工号 " + id);
@@ -138,7 +149,10 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
         getCache();
 
-        getProductionOrderInfo(Constant.productOrderInfoUrl, ShareUtils.getProductOrderId(getActivity()));
+        getProductionOrderInfo(Constant.productOrderInfoUrl,
+                ShareUtils.getProductOrderId(getActivity()),
+                ShareUtils.getColor(getActivity()),
+                ShareUtils.getSize(getActivity()));
         getSweingOrderInfo(Constant.sweingInfoUrl, ShareUtils.getSewingId(getActivity()));
         getSiteInfo(Constant.siteInfoUrl, ShareUtils.getSiteId(getActivity()));
 
@@ -165,7 +179,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             redDotLayout.addView(iv);
         }
 
-        if(siteFgList.size() > 1) {
+        if(siteFgList.size() > 1 && isTimerStart == false) {
+            isTimerStart = true;
             timer = new Timer();
             timerTask = new TimerTask() {
                 @Override
@@ -283,11 +298,13 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
      * @param url
      * @param code
      */
-    private void getProductionOrderInfo(String url, String code) {
+    private void getProductionOrderInfo(String url, String code, String color, String size) {
         OkHttpUtils
                 .get()
                 .url(url)
                 .addParams("code", code)
+                .addParams("color", color)
+                .addParams("size", size)
                 .build()
                 .execute(new MyStringCallback());
     }
@@ -313,6 +330,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             Gson gson = new Gson();
             productOrderEntity = gson.fromJson(response, ProductOrderInfoEntity.class);
             setProductOrderInfo(productOrderEntity);
+            mCache.put(Constant.productOrderCache, productOrderEntity);
         }
 
         @Override
@@ -365,6 +383,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             Gson gson = new Gson();
             sewingEntity = gson.fromJson(response, SewingInfoEntity.class);
             setSewingInfo(sewingEntity);
+            mCache.put(Constant.sewingInfoCache, sewingEntity);
         }
 
         @Override
@@ -421,6 +440,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         public void onResponse(String response, int id) {
             siteInfoEntity = new Gson().fromJson(response, SiteInfoEntity.class);
             setSiteInfo(siteInfoEntity);
+            mCache.put(Constant.siteInfoCache, siteInfoEntity);
         }
 
         @Override
@@ -438,6 +458,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 SiteInfoFragment fragment1 = new SiteInfoFragment();
                 fragment1.setOnVideoBookListener(this);
                 Bundle bundle1 = new Bundle();
+                bundle1.putString("StationCode", entity.getStationCode());
                 bundle1.putSerializable("entity", entity.getProcessData().get(i));
                 bundle1.putInt("position", i);
                 fragment1.setArguments(bundle1);
@@ -542,9 +563,9 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCache.put(Constant.productOrderCache, productOrderEntity);
-        mCache.put(Constant.sewingInfoCache, sewingEntity);
-        mCache.put(Constant.siteInfoCache, siteInfoEntity);
+//        mCache.put(Constant.productOrderCache, productOrderEntity);
+//        mCache.put(Constant.sewingInfoCache, sewingEntity);
+//        mCache.put(Constant.siteInfoCache, siteInfoEntity);
 
 //        ACache mCache = ACache.get(this);
 //        mCache.remove(Constant.showingFilmDB);

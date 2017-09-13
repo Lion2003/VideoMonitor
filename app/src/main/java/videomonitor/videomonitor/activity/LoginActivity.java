@@ -27,8 +27,12 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.dialog.CustomProgressDialog;
+import videomonitor.videomonitor.entity.EmpInfoEntity;
+import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
 import videomonitor.videomonitor.entity.SewingInfoEntity;
+import videomonitor.videomonitor.fragment.HomePagerFragment;
 
 /**
  * Created by Administrator on 2017-07-10.
@@ -54,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // 隐藏状态栏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-        getData();
+
         imgLogin = (ImageView) findViewById(R.id.img_login);
         imgLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,19 +90,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         dialog.show();
                         CURRENT_ID = readCodeFromScanner(view);
                         Log.d("CARD_ID",CURRENT_ID);
-//                        Intent it = new Intent(LoginActivity.this, MainActivity31.class);
-//                        it.putExtra("CURRENT_ID", CURRENT_ID);
-//                        startActivity(it);
-//                        finish();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
-                                it.putExtra("CURRENT_ID", CURRENT_ID);
-                                startActivity(it);
-                                finish();
+//                                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+//                                it.putExtra("CURRENT_ID", CURRENT_ID);
+//                                startActivity(it);
+//                                finish();
+                                getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
                             }
-                        }, 1500);
+                        }, 1000);
+
                     }
                 }
                 return false;
@@ -149,22 +151,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    public class User {
-        private int type;
-        private String deviceNo;
 
-        public User(int type, String deviceNo) {
-            this.type = type;
-            this.deviceNo = deviceNo;
-        }
-    }
-
-    private void getData() {
+    /**
+     * 获取用户登录信息
+     * @param url
+     * @param code
+     */
+    private void getEmpInfo(String url, String code) {
         OkHttpUtils
-                .postString()
-                .url("http://fushan.oudot.cn/fushan_cisma_api/app")
-                .content(new Gson().toJson(new User(1, "SJ000323")))
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .get()
+                .url(url)
+                .addParams("code", code)
                 .build()
                 .execute(new MyStringCallback());
     }
@@ -177,7 +174,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         @Override
         public void onAfter(int id) {
-            Log.e("onAfter", id + "");
+
         }
 
         @Override
@@ -188,6 +185,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
         public void onResponse(String response, int id) {
             Gson gson = new Gson();
+            EmpInfoEntity empInfoEntity = gson.fromJson(response, EmpInfoEntity.class);
+            Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+            it.putExtra("CURRENT_ID", CURRENT_ID);
+            it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoEntity);
+            startActivity(it);
+            finish();
         }
 
         @Override
@@ -195,4 +198,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //            mProgressBar.setProgress((int) (100 * progress));
         }
     }
+
+
+
+
+//    public class User {
+//        private int type;
+//        private String deviceNo;
+//
+//        public User(int type, String deviceNo) {
+//            this.type = type;
+//            this.deviceNo = deviceNo;
+//        }
+//    }
+//
+//    private void getData() {
+//        OkHttpUtils
+//                .postString()
+//                .url("http://fushan.oudot.cn/fushan_cisma_api/app")
+//                .content(new Gson().toJson(new User(1, "SJ000323")))
+//                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                .build()
+//                .execute(new MyStringCallback());
+//    }
+//
+//    public class MyStringCallback extends StringCallback {
+//        @Override
+//        public void onBefore(Request request, int id) {
+//            Log.e("reeuest", "" + request + id);
+//        }
+//
+//        @Override
+//        public void onAfter(int id) {
+//            Log.e("onAfter", id + "");
+//        }
+//
+//        @Override
+//        public void onError(Call call, Exception e, int id) {
+//            e.printStackTrace();
+//        }
+//
+//        @Override
+//        public void onResponse(String response, int id) {
+//            Gson gson = new Gson();
+//        }
+//
+//        @Override
+//        public void inProgress(float progress, long total, int id) {
+////            mProgressBar.setProgress((int) (100 * progress));
+//        }
+//    }
 }

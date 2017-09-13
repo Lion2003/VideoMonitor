@@ -43,8 +43,8 @@ public class VideoStandardDetailActivity extends BaseActivity implements View.On
         info = (VideoDetailInfo) getIntent().getSerializableExtra(VideoDetailInfo.class.getSimpleName());
         currentState = getIntent().getIntExtra("currentState", 0);
 
-        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
-        imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/DCIM"));//  /DCIM/Video   /Movies/1
+        list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
+        imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
 
         tvState = (TextView) findViewById(R.id.avsd_changeState);
         tvState.setOnClickListener(this);
@@ -57,7 +57,10 @@ public class VideoStandardDetailActivity extends BaseActivity implements View.On
             if(!StringUtil.isEmpty(path)) {
                 showBook(path);
             } else {
-                Toast.makeText(this, "无作业指导书", Toast.LENGTH_SHORT).show();
+                if(imageList != null && imageList.size() >0) {
+                    showBook(imageList.get(0).filePath);
+//                    Toast.makeText(this, "无作业指导书", Toast.LENGTH_SHORT).show();
+                }
             }
 //            showBook();
             tvState.setText("点击查看标准视频");
@@ -76,7 +79,10 @@ public class VideoStandardDetailActivity extends BaseActivity implements View.On
                         currentState = 1;
                         tvState.setText("点击查看标准视频");
                     } else {
-                        Toast.makeText(this, "无作业指导书", Toast.LENGTH_SHORT).show();
+                        if(imageList != null && imageList.size() >0) {
+                            showBook(imageList.get(0).filePath);
+//                             Toast.makeText(this, "无作业指导书", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } else { //如果当前为作业指导书界面
                     playVideo();

@@ -6,6 +6,7 @@ package videomonitor.videomonitor.constant;
 
 public class Constant {
     public static String baseUrl = "http://112.124.63.137:8016";
+    public static String empInfoUrl = baseUrl + "/api/EmpInfo/"; //用户个人信息
     public static String productOrderInfoUrl = baseUrl + "/api/po/"; //生产单信息
     public static String sweingInfoUrl = baseUrl + "/api/Sartorius/"; //缝纫机信息
     public static String siteInfoUrl = baseUrl + "/api/Station/"; //站点信息

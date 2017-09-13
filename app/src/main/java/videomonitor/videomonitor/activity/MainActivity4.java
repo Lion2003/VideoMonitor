@@ -7,11 +7,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.entity.EmpInfoEntity;
 import videomonitor.videomonitor.fragment.HomePagerFragment;
 import videomonitor.videomonitor.fragment.InstructBookFragment;
 import videomonitor.videomonitor.fragment.InstructionBookListFragment;
@@ -38,6 +40,7 @@ public class MainActivity4 extends BaseActivity {
     private boolean isCurrentAccountRemoved = false;
 
     private String CURRENT_ID;
+    private EmpInfoEntity empInfoEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public class MainActivity4 extends BaseActivity {
 
         setContentView(R.layout.activity_main4);
 
+        empInfoEntity= (EmpInfoEntity) getIntent().getSerializableExtra(EmpInfoEntity.class.getSimpleName());
         CURRENT_ID = getIntent().getStringExtra("CURRENT_ID").trim();
         if(StringUtil.isEmpty(CURRENT_ID)) {
             CURRENT_ID = "2007001023";
@@ -59,6 +63,7 @@ public class MainActivity4 extends BaseActivity {
 
         Bundle bundle1 = new Bundle();
         bundle1.putString("CURRENT_ID", CURRENT_ID);
+        bundle1.putSerializable(EmpInfoEntity.class.getSimpleName(), empInfoEntity);
         homePagerFragment.setArguments(bundle1);
 
         Bundle bundle3 = new Bundle();
@@ -143,6 +148,20 @@ public class MainActivity4 extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    private long mPressedTime = 0;
+
+    @Override
+    public void onBackPressed() {
+        long mNowTime = System.currentTimeMillis();//获取第一次按键时间
+        if((mNowTime - mPressedTime) > 2000){//比较两次按键时间差
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mPressedTime = mNowTime;
+        }else{//退出程序
+           this.finish();
+           System.exit(0);
+        }
     }
 
 

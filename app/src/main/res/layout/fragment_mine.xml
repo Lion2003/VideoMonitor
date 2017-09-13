@@ -29,8 +29,8 @@
                 android:background="@color/white">
                 <TextView
                     android:layout_width="@dimen/mp_258"
-                    android:layout_height="@dimen/mp_70"
-                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/icon_avatar"
                     android:drawablePadding="@dimen/mp_14"
                     android:paddingBottom="20dip"
                     android:paddingLeft="@dimen/mp_14"

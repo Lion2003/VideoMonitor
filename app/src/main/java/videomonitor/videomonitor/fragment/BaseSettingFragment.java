@@ -1,14 +1,17 @@
 package videomonitor.videomonitor.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import videomonitor.videomonitor.R;
@@ -23,7 +26,8 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
     private View view;
     private RadioGroup radioGroup;
     private RadioButton bfj, pfj;
-    private EditText productorderId, frjId, siteId;
+    private EditText productorderId, edColor, frjId, siteId;
+    private Spinner spinner;
     private Button btn;
 
     private int type = 1;
@@ -36,12 +40,41 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
         pfj = (RadioButton) view.findViewById(R.id.fbs_pfj);
         productorderId = (EditText) view.findViewById(R.id.producOrderId);
         frjId = (EditText) view.findViewById(R.id.frjId);
+        edColor = (EditText) view.findViewById(R.id.color);
+        spinner = (Spinner) view.findViewById(R.id.size);
+
         siteId = (EditText) view.findViewById(R.id.siteId);
         btn = (Button) view.findViewById(R.id.save);
         btn.setOnClickListener(this);
 
+        int position = 0;
+        Resources resources =getResources();
+        String[] list = resources.getStringArray(R.array.size_labels);
+        for(int i = 0; i < list.length; i++) {
+            if(ShareUtils.getSize(getActivity()).equals(list[i])) {
+                position = i;
+            }
+        }
+
+        productorderId.setText(ShareUtils.getProductOrderId(getActivity()));
+        edColor.setText(ShareUtils.getColor(getActivity()));
+        spinner.setSelection(position);
         frjId.setText(ShareUtils.getSewingId(getActivity()));
         siteId.setText(ShareUtils.getSiteId(getActivity()));
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Resources resources =getResources();
+                String[] list = resources.getStringArray(R.array.size_labels);
+//                Toast.makeText(getActivity(), spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -75,6 +108,12 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                 if (StringUtil.isEmpty(productorderId.getText().toString())) {
                     Toast.makeText(getActivity(), "请输入生产单编号", Toast.LENGTH_SHORT).show();
                     return;
+                } else if(StringUtil.isEmpty(edColor.getText().toString())){
+                    Toast.makeText(getActivity(), "请输入生产单颜色", Toast.LENGTH_SHORT).show();
+                    return;
+                }  else if(StringUtil.isEmpty(spinner.getSelectedItem().toString())){
+                    Toast.makeText(getActivity(), "请输入生产单颜色", Toast.LENGTH_SHORT).show();
+                    return;
                 } else if(StringUtil.isEmpty(frjId.getText().toString())) {
                     Toast.makeText(getActivity(), "请输入缝纫机编号", Toast.LENGTH_SHORT).show();
                     return;
@@ -83,8 +122,11 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                     return;
                 }
                 ShareUtils.saveInfo(getActivity(), type, productorderId.getText().toString().trim(),
+                        edColor.getText().toString().trim(),
+                        spinner.getSelectedItem().toString(),
                         frjId.getText().toString().trim(),
                         siteId.getText().toString().trim());
+                Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
                 break;
 
         }
