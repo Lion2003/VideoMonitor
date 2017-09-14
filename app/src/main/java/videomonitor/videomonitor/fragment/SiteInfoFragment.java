@@ -18,7 +18,7 @@ import videomonitor.videomonitor.entity.SiteInfoEntity.ProcessDataBean;
 
 public class SiteInfoFragment extends Fragment implements View.OnClickListener{
     private View view;
-    private TextView siteNum; //站点
+//    private TextView siteNum; //站点
     private TextView processNumber; //工序编号
     private TextView processName; //工序名称
     private TextView standardHour; //标准工时
@@ -31,7 +31,7 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
     private Button btnVideo;
 
     private ProcessDataBean entity;
-    private String StationCode;
+//    private String StationCode;
     private int position;
 
     @Override
@@ -39,9 +39,9 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
         view = inflater.inflate(R.layout.fragment_site_info, container, false);
 
         entity = (ProcessDataBean) getArguments().getSerializable("entity");
-        StationCode = getArguments().getString("StationCode");
+//        StationCode = getArguments().getString("StationCode");
 
-        siteNum = (TextView) view.findViewById(R.id.fsi_siteNum); //站点
+//        siteNum = (TextView) view.findViewById(R.id.fsi_siteNum); //站点
         processNumber = (TextView) view.findViewById(R.id.fsi_processNumber); //工序编号
         processName = (TextView) view.findViewById(R.id.fsi_processName); //工序名称
         standardHour = (TextView) view.findViewById(R.id.fsi_standardHour); //标准工时
@@ -53,7 +53,7 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
         btnBook = (Button) view.findViewById(R.id.fsi_watchBook);
         btnVideo = (Button) view.findViewById(R.id.fsi_watchVideo);
 
-        siteNum.setText(StationCode);
+//        siteNum.setText(StationCode);
         processNumber.setText(entity.getProcessCode());
         processName.setText(entity.getProcessName());
         standardHour.setText(entity.getStandardHour() + "秒");

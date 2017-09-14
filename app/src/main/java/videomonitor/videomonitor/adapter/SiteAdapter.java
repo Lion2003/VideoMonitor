@@ -13,10 +13,12 @@ import videomonitor.videomonitor.fragment.SiteInfoFragment;
  */
 
 public class SiteAdapter extends FragmentStatePagerAdapter {
+    private List<String> titles;
     private List<SiteInfoFragment> fragments;
 
-    public SiteAdapter(FragmentManager fm, List<SiteInfoFragment> fragments) {
+    public SiteAdapter(FragmentManager fm, List<String> titles, List<SiteInfoFragment> fragments) {
         super(fm);
+        this.titles = titles;
         this.fragments = fragments;
     }
 
@@ -28,5 +30,10 @@ public class SiteAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return fragments.size();
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return titles.get(position);
     }
 }

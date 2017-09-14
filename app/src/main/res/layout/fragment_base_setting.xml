@@ -5,24 +5,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/mp_10"
     android:background="@color/white">
-
-    <RadioGroup
-        android:id="@+id/fbs_radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:checkedButton="@+id/fbs_bfj">
-        <RadioButton
-            android:id="@+id/fbs_bfj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="包缝机"/>
-        <RadioButton
-            android:id="@+id/fbs_pfj"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="平缝机"/>
-    </RadioGroup>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,11 +48,30 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="缝纫机编号："/>
+            android:text="缝纫机信息："/>
+        <RadioGroup
+            android:id="@+id/fbs_radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:checkedButton="@+id/fbs_bfj"
+            android:gravity="center_vertical">
+            <RadioButton
+                android:id="@+id/fbs_bfj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="包缝机"/>
+            <RadioButton
+                android:id="@+id/fbs_pfj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="平缝机"/>
+        </RadioGroup>
         <EditText
             android:id="@+id/frjId"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/mp_20"
             android:hint="输入缝纫机编号"
             android:textSize="@dimen/f_14"
             android:focusable="true"/>

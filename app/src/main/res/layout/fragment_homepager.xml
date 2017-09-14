@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -224,11 +225,13 @@
             android:layout_marginRight="@dimen/mp_5"
             android:layout_marginBottom="@dimen/mp_5">
             <LinearLayout
+                android:id="@+id/fh_sewingMachineLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:orientation="vertical"
                 android:layout_weight="21"
                 android:background="@color/white">
+                <!--
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/mp_35"
@@ -441,18 +444,59 @@
                         android:layout_weight="1"
                         android:text=""
                         style="@style/textStyle"/>
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="29">
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/fh_viewPager"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:layout_marginTop="@dimen/mp_5"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/mp_5">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mp_35"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@color/white">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/mp_20"
+                            android:text="站点   "
+                            android:textSize="@dimen/f_15"
+                            android:textColor="@color/tv_black3"
+                            android:drawableLeft="@mipmap/icon_location"
+                            android:drawablePadding="@dimen/mp_10"
+                            android:gravity="center_vertical"/>
+                        <TextView
+                            android:id="@+id/fsi_siteNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="13"
+                            android:textSize="@dimen/f_15"
+                            style="@style/textStyle"
+                            android:textColor="@color/color_e24a4a"/>
+                    </LinearLayout>
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/mp_40"
+                        android:background="@color/white"
+                        app:tabTextColor="@color/tv_black3"
+                        app:tabSelectedTextColor="@color/status_bar_color"
+                        app:tabIndicatorColor="@color/status_bar_color"
+                        app:tabIndicatorHeight="@dimen/mp_3"
+                        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/fh_viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+                </LinearLayout>
+                <!--
                 <FrameLayout
                     android:id="@+id/fh_frameLayout"
                     android:layout_width="match_parent"
@@ -466,7 +510,7 @@
                         android:orientation="horizontal"
                         android:layout_gravity="center">
                     </LinearLayout>
-                </FrameLayout>
+                </FrameLayout>-->
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

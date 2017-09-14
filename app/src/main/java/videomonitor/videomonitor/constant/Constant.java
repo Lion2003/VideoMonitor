@@ -9,6 +9,7 @@ public class Constant {
     public static String empInfoUrl = baseUrl + "/api/EmpInfo/"; //用户个人信息
     public static String productOrderInfoUrl = baseUrl + "/api/po/"; //生产单信息
     public static String sweingInfoUrl = baseUrl + "/api/Sartorius/"; //缝纫机信息
+    public static String sweingInfoUrl1 = "http://fushan.oudot.cn/fushan_cisma_api/app"; //缝纫机信息
     public static String siteInfoUrl = baseUrl + "/api/Station/"; //站点信息
 
 
