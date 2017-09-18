@@ -92,8 +92,8 @@ public class ShareUtils {
     }
 
     public static int getMachineType(Context context) {
-        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        int id=preferences.getInt("type", 3);
+        SharedPreferences preferences = context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        int id = preferences.getInt("type", 1);
         return id;
     }
 

@@ -128,7 +128,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         // 参数：
         // 1000，延时1秒后执行。
         // 60000，每隔60秒执行1次task。
-        timer.schedule(task, 1000, 5000);
+        timer.schedule(task, 1000, 60000);
 
         getProductionOrderInfo(Constant.productOrderInfoUrl,
                 ShareUtils.getProductOrderId(getActivity()),
@@ -395,7 +395,11 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
             mViewPager.setOffscreenPageLimit(entity.getProcessData().size());
             siteNum.setText(entity.getStationCode());
-
+            if(siteFgList.size() == 1) {
+                tablayout.setVisibility(View.GONE);
+            } else if(siteFgList.size() >1) {
+                tablayout.setVisibility(View.VISIBLE);
+            }
             if(adapter == null) {
                 adapter = new SiteAdapter(getChildFragmentManager(), titles, siteFgList);
                 mViewPager.setAdapter(adapter);
@@ -439,6 +443,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         sewingEntity = (SewingMachineEntity) mCache.getAsObject(Constant.sewingInfoCache);
         if(sewingEntity != null) {
             //获取缝纫机信息缓存
+            setSewingInfo(sewingEntity);
+        } else {
             setSewingInfo(sewingEntity);
         }
 
