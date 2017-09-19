@@ -29,28 +29,28 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:text="设备编码"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="SJ00033"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="型号"
+            android:layout_weight="1"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/modelNo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="XG003"
+            android:layout_weight="1"
+            android:text=""
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -62,27 +62,27 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="前剪线累计次数"
+            android:layout_weight="1"
+            android:text="当前缝纫状态"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/thisBootTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0分钟"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="自动抬压脚前抬累计次数"
+            android:layout_weight="1"
+            android:text="手动剪线累计次数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/pinNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0针"
             style="@style/textStyle"/>
     </LinearLayout>
@@ -95,27 +95,27 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="后剪线累计次数"
+            android:layout_weight="1"
+            android:text="实际点击转速"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumBootTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0小时"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="自动抬压脚后抬累计次数"
+            android:layout_weight="1"
+            android:text="故障码累计次数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumPinNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0"
             style="@style/textStyle"/>
     </LinearLayout>
@@ -127,27 +127,27 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="后踏剪线累计次数"
+            android:layout_weight="1"
+            android:text="剪线次数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/cutLineNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0次"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="前吸气累计次数"
+            android:layout_weight="1"
+            android:text="累计开机时间"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/presserNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0次"
             style="@style/textStyle"/>
     </LinearLayout>
@@ -160,27 +160,27 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="一次前后剪线间隔时间"
+            android:layout_weight="1"
+            android:text="针数累计次数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumCutLineNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0次"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
-            android:text="后吸气累计次数"
+            android:layout_weight="1"
+            android:text="运转平均速度"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumPresserNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0次"
             style="@style/textStyle"/>
     </LinearLayout>
@@ -189,30 +189,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/mp_15"
-        android:layout_marginBottom="@dimen/mp_14">
+        android:layout_marginBottom="@dimen/mp_14"
+        android:visibility="gone">
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:text="针数累计次数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/speed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text="0RPM"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="7"
+            android:layout_weight="1"
             android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="1"
             android:text=""
             style="@style/textStyle"/>
     </LinearLayout>

@@ -54,18 +54,31 @@ public class OverlockMachineFragment extends Fragment {
 
 
         code.setText(ShareUtils.getSewingId(getActivity())); //设备编号
-        modelNo.setText("MK009"); //型号
+//        modelNo.setText("MK009"); //型号
         if(sewingEntity != null && sewingEntity.getRetBody() != null) {
-            thisBootTime.setText(sewingEntity.getRetBody().getParam1() +  "次"); //前剪线累计次数
+            switch (sewingEntity.getRetBody().getParam1()) {
+                case "0":
+                    thisBootTime.setText("待机"); //前剪线累计次数
+                    break;
+                case "1":
+                    thisBootTime.setText("电机运转"); //前剪线累计次数
+                    break;
+                case "2":
+                    thisBootTime.setText("仅模式运转"); //前剪线累计次数
+                    break;
+                case "3":
+                    thisBootTime.setText("电机和模式都运转"); //前剪线累计次数
+                    break;
+            }
             sumBootTime.setText(sewingEntity.getRetBody().getParam2() + "次"); //后剪线累计次数
             cutLineNum.setText(sewingEntity.getRetBody().getParam3() + "次"); //后踏剪线累计次数
-            sumCutLineNum.setText(sewingEntity.getRetBody().getParam4() + "分"); //一次前后剪线间隔时间
-            speed.setText(sewingEntity.getRetBody().getParam5() + "次"); //针数累计次数
+            sumCutLineNum.setText(sewingEntity.getRetBody().getParam4() + "次"); //一次前后剪线间隔时间
+//            speed.setText(sewingEntity.getRetBody().getParam5() + "次"); //针数累计次数
 
-            pinNum.setText(sewingEntity.getRetBody().getParam6() + "次"); //自动抬压脚前抬累计次数
-            sumPinNum.setText(sewingEntity.getRetBody().getParam7() + "次"); //自动抬压脚后抬累计次数
-            presserNum.setText(sewingEntity.getRetBody().getParam9() + "次"); //前吸气累计次数
-            sumPresserNum.setText(sewingEntity.getRetBody().getParam10() + "次"); //后吸气累计次数
+            pinNum.setText(sewingEntity.getRetBody().getParam5() + "次"); //自动抬压脚前抬累计次数
+            sumPinNum.setText(sewingEntity.getRetBody().getParam6() + "次"); //自动抬压脚后抬累计次数
+            presserNum.setText(sewingEntity.getRetBody().getParam7() + "时"); //前吸气累计次数
+            sumPresserNum.setText(sewingEntity.getRetBody().getParam8() + "次"); //后吸气累计次数
         }
 
         return view;

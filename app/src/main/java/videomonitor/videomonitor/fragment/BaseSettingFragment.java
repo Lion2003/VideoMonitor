@@ -26,7 +26,7 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
     private View view;
     private RadioGroup radioGroup;
     private RadioButton bfj, pfj;
-    private EditText productorderId, edColor, frjId, siteId;
+    private EditText productorderId, edColor, frjId, siteId, url;
     private Spinner spinner;
     private Button btn;
 
@@ -41,6 +41,7 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
         productorderId = (EditText) view.findViewById(R.id.producOrderId);
         frjId = (EditText) view.findViewById(R.id.frjId);
         edColor = (EditText) view.findViewById(R.id.color);
+        url = (EditText) view.findViewById(R.id.url);
         spinner = (Spinner) view.findViewById(R.id.size);
 
         siteId = (EditText) view.findViewById(R.id.siteId);
@@ -97,7 +98,7 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
         } else if(ShareUtils.getMachineType(getActivity()) == 3) {
             pfj.setChecked(true);
         }
-
+        url.setText(ShareUtils.getUrl(getActivity()));
         return view;
     }
 
@@ -120,12 +121,16 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                 } else if(StringUtil.isEmpty(siteId.getText().toString())) {
                     Toast.makeText(getActivity(), "请输入站点编号", Toast.LENGTH_SHORT).show();
                     return;
+                } else if(StringUtil.isEmpty(url.getText().toString())) {
+                    Toast.makeText(getActivity(), "请输入站点编号", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 ShareUtils.saveInfo(getActivity(), type, productorderId.getText().toString().trim(),
                         edColor.getText().toString().trim(),
                         spinner.getSelectedItem().toString(),
                         frjId.getText().toString().trim(),
                         siteId.getText().toString().trim());
+                ShareUtils.setUrl(getActivity(), url.getText().toString());
                 Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
                 break;
 

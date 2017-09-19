@@ -18,6 +18,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.umeng.analytics.MobclickAgent;
+
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.utils.StatusBarUtils;
 
@@ -34,13 +36,21 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
     }
+
+
 
 }

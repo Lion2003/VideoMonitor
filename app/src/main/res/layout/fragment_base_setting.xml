@@ -92,6 +92,22 @@
             android:textSize="@dimen/f_14"
             android:focusable="true"/>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="URL："/>
+        <EditText
+            android:id="@+id/url"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:hint="请输入url"
+            android:textSize="@dimen/f_14"
+            android:focusable="true"/>
+    </LinearLayout>
     <Button
         android:id="@+id/save"
         android:layout_width="wrap_content"

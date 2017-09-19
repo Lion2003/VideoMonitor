@@ -73,6 +73,13 @@ public class ShareUtils {
         editor.commit();
     }
 
+    public static void setUrl(Context context, String url) {
+        SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("url", url);
+        editor.commit();
+    }
+
     public static String getProductOrderId(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
         String id=preferences.getString("productOrderId", "D293-HR");
@@ -81,7 +88,7 @@ public class ShareUtils {
 
     public static String getSewingId(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        String id=preferences.getString("sewingId", "SJ000323");
+        String id=preferences.getString("sewingId", "cisma001");
         return id;
     }
 
@@ -92,8 +99,13 @@ public class ShareUtils {
     }
 
     public static int getMachineType(Context context) {
-        SharedPreferences preferences = context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        int id = preferences.getInt("type", 1);
+        int id = 0;
+        try{
+            SharedPreferences preferences = context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+            id = preferences.getInt("type", 1);
+        }catch (Exception e) {
+            id = 1;
+        }
         return id;
     }
 
@@ -106,6 +118,12 @@ public class ShareUtils {
     public static String getSize(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
         String id=preferences.getString("size", "S");
+        return id;
+    }
+
+    public static String getUrl(Context context) {
+        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        String id=preferences.getString("url", "http://112.124.63.137:8016");
         return id;
     }
 

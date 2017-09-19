@@ -83,11 +83,12 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
     private Timer timer;
     private TimerTask task;
+    private EmpInfoEntity en;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepager, container, false);
-        EmpInfoEntity en = (EmpInfoEntity)getArguments().getSerializable(EmpInfoEntity.class.getSimpleName());
+        en = (EmpInfoEntity)getArguments().getSerializable(EmpInfoEntity.class.getSimpleName());
 
         list =  VideoUtils.getVideoFile(new ArrayList<VideoInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
         imageList = ImageUtils.getImageFile(new ArrayList<ImageInfo>(), new File(Environment.getExternalStorageDirectory() + "/aps"));//  /DCIM/Video   /Movies/1
@@ -344,6 +345,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 .get()
                 .url(url)
                 .addParams("code", code)
+                .addParams("empCode", en.getEmpCode())
                 .build()
                 .execute(new MySiteCallback());
     }
