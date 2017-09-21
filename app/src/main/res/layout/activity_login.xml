@@ -24,6 +24,18 @@
         android:layout_margin="@dimen/mp_15"
         android:padding="@dimen/mp_10"
         android:textColor="@color/white" />
+    <Button
+        android:id="@+id/al_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="基础设置"
+        android:background="@drawable/em_button_login_bg"
+        android:layout_marginRight="@dimen/mp_15"
+        android:layout_below="@+id/al_login"
+        android:padding="@dimen/mp_10"
+        android:textColor="@color/white" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,11 +44,13 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/focus"
         android:layout_toEndOf="@+id/focus">
+
         <ImageView
             android:id="@+id/img_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/icon_welcome"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,6 +87,7 @@
             android:layout_marginTop="@dimen/mp_25"
             android:paddingBottom="@dimen/mp_45"/>
     </LinearLayout>
+
     <!--
     <ImageView
         android:layout_width="wrap_content"

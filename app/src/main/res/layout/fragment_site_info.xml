@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
         <View
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="70045"
+                    android:text=""
                     style="@style/textStyle"/>
                 <TextView
                     android:layout_width="0dp"
@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="45秒"
+                    android:text="秒"
                     style="@style/textStyle"/>
             </LinearLayout>
             <LinearLayout
@@ -70,7 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="暗合门襟腰头挂钩垫布连翻门襟腰头"
+                    android:text=""
                     style="@style/textStyle"
                     android:singleLine="true"
                     android:ellipsize="end"/>
@@ -85,7 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="70045"
+                    android:text=""
                     style="@style/textStyle"/>
             </LinearLayout>
         </LinearLayout>
@@ -118,7 +118,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="850件"
+                    android:text="件"
                     style="@style/textStyle"/>
                 <TextView
                     android:layout_width="0dp"
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="297.5元"
+                    android:text="元"
                     style="@style/textStyle"/>
             </LinearLayout>
             <LinearLayout
@@ -151,7 +151,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="650件"
+                    android:text="件"
                     style="@style/textStyle"/>
                 <TextView
                     android:layout_width="0dp"
@@ -165,12 +165,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="227.5元"
+                    android:text="元"
                     style="@style/textStyle"
                     android:textColor="@color/color_FE2525"/>
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal">
@@ -189,14 +189,15 @@
                 android:id="@+id/fsi_watchVideo"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/mp_50"
+                android:layout_toRightOf="@+id/fsi_watchBook"
                 android:text="查看标准视频"
                 style="@style/textStyle"
                 android:background="@drawable/em_button_login_bg"
                 android:textSize="@dimen/f_18"
                 android:textColor="@color/white"
                 android:layout_marginLeft="@dimen/mp_20"
-                android:paddingLeft="@dimen/mp_20"
-                android:paddingRight="@dimen/mp_20"/>
-        </LinearLayout>
+                android:paddingLeft="@dimen/mp_25"
+                android:paddingRight="@dimen/mp_25"/>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

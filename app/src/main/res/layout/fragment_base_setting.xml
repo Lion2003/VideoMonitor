@@ -33,11 +33,11 @@
                 android:hint="颜色"
                 android:textSize="@dimen/f_14"
                 android:focusable="true"/>
-            <Spinner
+            <EditText
                 android:id="@+id/size"
                 android:layout_width="200dp"
-                android:layout_height="50dp"
-                android:entries="@array/size_labels"/>
+                android:hint="尺码"
+                android:layout_height="50dp"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -66,6 +66,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="平缝机"/>
+            <RadioButton
+                android:id="@+id/fbs_xbj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="下摆机"/>
         </RadioGroup>
         <EditText
             android:id="@+id/frjId"
@@ -107,6 +112,27 @@
             android:hint="请输入url"
             android:textSize="@dimen/f_14"
             android:focusable="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刷新频率："/>
+        <EditText
+            android:id="@+id/time"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:hint="请输入时间"
+            android:textSize="@dimen/f_14"
+            android:focusable="true"
+            android:inputType="number"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="秒"/>
     </LinearLayout>
     <Button
         android:id="@+id/save"

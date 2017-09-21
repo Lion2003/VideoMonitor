@@ -13,11 +13,11 @@ import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.SewingMachineEntity;
 
 /**
- * 包缝机fragment
- * Created by Administrator on 2017-09-14.
+ * 下摆机fragment
+ * Created by Administrator on 2017-09-21.
  */
 
-public class OverlockMachineFragment extends Fragment implements View.OnClickListener {
+public class RimMachineFragment  extends Fragment implements View.OnClickListener {
     private View view;
     //缝纫机信息
     private TextView code; //设备编号
@@ -39,7 +39,7 @@ public class OverlockMachineFragment extends Fragment implements View.OnClickLis
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_overlock_machine, container, false);
+        view = inflater.inflate(R.layout.fragment_rim_machine, container, false);
 
         sewingEntity = (SewingMachineEntity) getArguments().getSerializable(SewingMachineEntity.class.getSimpleName());
         sewingUnlockEntity = (SewingMachineEntity) getArguments().getSerializable("lockState");

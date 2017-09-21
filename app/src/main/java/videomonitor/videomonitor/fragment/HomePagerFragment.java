@@ -76,6 +76,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
     //缝纫机信息
     private SewingMachineEntity sewingEntity;
+    private SewingMachineEntity sewingUnlockEntity;
 
     //站点信息
     private SiteInfoEntity siteInfoEntity;
@@ -99,7 +100,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         }
         currentId = (TextView) view.findViewById(R.id.current_id);
         String id =  getArguments().getString("CURRENT_ID", "2017001023");
-        currentId.setText("工号 " + id);
+        currentId.setText("工号 " + en.getEmpCode());
 
         //实例化生产单信息控件
         poCode = (TextView) view.findViewById(R.id.poCode); //生产单
@@ -129,15 +130,21 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         // 参数：
         // 1000，延时1秒后执行。
         // 60000，每隔60秒执行1次task。
-        timer.schedule(task, 1000, 60000);
+        timer.schedule(task, 1000, ShareUtils.getTime(getActivity()) * 1000);
 
         getProductionOrderInfo(Constant.productOrderInfoUrl,
                 ShareUtils.getProductOrderId(getActivity()),
                 ShareUtils.getColor(getActivity()),
                 ShareUtils.getSize(getActivity()));
-        getSiteInfo(Constant.siteInfoUrl,
-                ShareUtils.getSiteId(getActivity()));
-
+        if(ShareUtils.getMachineType(getActivity()) == 1) { //如果是包缝机，那么解锁包缝机
+            getSweingOrderInfo(Constant.sweingInfoUrl1,
+                    2,
+                    ShareUtils.getSewingId(getActivity()));
+        } else if(ShareUtils.getMachineType(getActivity()) == 3) { //如果是平缝机， 那么解锁平缝机
+            getSweingOrderInfo(Constant.sweingInfoUrl1,
+                    4,
+                    ShareUtils.getSewingId(getActivity()));
+        }
         return view;
     }
 
@@ -149,6 +156,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                     getSweingOrderInfo(Constant.sweingInfoUrl1,
                             ShareUtils.getMachineType(getActivity()),
                             ShareUtils.getSewingId(getActivity()));
+                    getSiteInfo(Constant.siteInfoUrl,
+                            ShareUtils.getSiteId(getActivity()));
                     break;
             }
         }
@@ -157,48 +166,56 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     VideoPlayerJCFragment videoFragment;
     @Override
     public void videoListener(String videoUrl, int position) {
-        if(videoFragment != null) {
-            videoFragment.getBDView().onStop();
-            videoFragment.getBDView().onDestroy();
-            videoFragment = null;
-        }
-        videoFragment = new VideoPlayerJCFragment();
-        String path = VideoUtils.checkContainVideo(list, videoUrl);
-        if(!StringUtil.isEmpty(path)) {
-            Bundle bundle = new Bundle();
-            bundle.putString("videoUrl", path);
-            videoFragment.setArguments(bundle);
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fh_linearlayout, videoFragment)
-                    .commit();
-        } else {
-            Toast.makeText(getActivity(), "无此视频", Toast.LENGTH_SHORT).show();
+        try{
+            if(videoFragment != null) {
+                videoFragment.getBDView().onStop();
+                videoFragment.getBDView().onDestroy();
+                videoFragment = null;
+            }
+            videoFragment = new VideoPlayerJCFragment();
+            String path = VideoUtils.checkContainVideo(list, videoUrl);
+            if(!StringUtil.isEmpty(path)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("videoUrl", path);
+                videoFragment.setArguments(bundle);
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.fh_linearlayout, videoFragment)
+                        .commitAllowingStateLoss();
+            } else {
+                Toast.makeText(getActivity(), "无此视频", Toast.LENGTH_SHORT).show();
+            }
+        } catch(Exception e) {
+
         }
     }
 
     InstructBookOnePageFragment bookFragment;
     @Override
     public void bookListener(String bookUrl, int position) {
-        if(videoFragment != null) {
-            videoFragment.getBDView().onStop();
-            videoFragment.getBDView().onDestroy();
-            videoFragment = null;
-        }
-        bookFragment = new InstructBookOnePageFragment();
-        String path = ImageUtils.checkContainImage(imageList, bookUrl);
-        if(!StringUtil.isEmpty(path)) {
-            Bundle bundle = new Bundle();
-            bundle.putString("source", path);
-            bookFragment.setArguments(bundle);
-            getChildFragmentManager().beginTransaction()
-                    .replace(R.id.fh_linearlayout, bookFragment)
-                    .commit();
+        try {
+            if(videoFragment != null) {
+                videoFragment.getBDView().onStop();
+                videoFragment.getBDView().onDestroy();
+                videoFragment = null;
+            }
+            bookFragment = new InstructBookOnePageFragment();
+            String path = ImageUtils.checkContainImage(imageList, bookUrl);
+            if(!StringUtil.isEmpty(path)) {
+                Bundle bundle = new Bundle();
+                bundle.putString("source", path);
+                bookFragment.setArguments(bundle);
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.fh_linearlayout, bookFragment)
+                        .commitAllowingStateLoss();
 
-            Intent it = new Intent(getActivity(), FullScreenBookActivity.class);
-            it.putExtra("source", path);
-            startActivity(it);
-        } else {
-            Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(getActivity(), FullScreenBookActivity.class);
+                it.putExtra("source", path);
+                startActivity(it);
+            } else {
+                Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
+            }
+        } catch(Exception e) {
+
         }
 
     }
@@ -238,10 +255,14 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
         @Override
         public void onResponse(String response, int id) {
-            Gson gson = new Gson();
-            productOrderEntity = gson.fromJson(response, ProductOrderInfoEntity.class);
-            setProductOrderInfo(productOrderEntity);
+            try {
+                Gson gson = new Gson();
+                productOrderEntity = gson.fromJson(response, ProductOrderInfoEntity.class);
+                setProductOrderInfo(productOrderEntity);
             mCache.put(Constant.productOrderCache, productOrderEntity);
+            } catch(Exception e) {
+
+            }
         }
 
         @Override
@@ -271,19 +292,27 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
     /**
      * 获取缝纫机信息
-     * @param url
+     * @param url 接口url
+     * @param type  1:包缝机 2:解锁包缝机 3:平缝机 4:解锁平缝机
+     * @param deviceNo  设备编码
      */
-    private void getSweingOrderInfo(String url, int type, String deviceNo) {
+    public void getSweingOrderInfo(String url, int type, String deviceNo) {
         OkHttpUtils
                 .postString()
                 .url(url)
                 .content(new Gson().toJson(new User(type, deviceNo)))
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
-                .execute(new MySweingCallback());
+                .execute(new MySweingCallback(type));
     }
 
     public class MySweingCallback extends StringCallback {
+        private int type;
+
+        public MySweingCallback(int type) {
+            this.type = type;
+        }
+
         @Override
         public void onBefore(Request request, int id) {
             Log.e("reeuest", "" + request + id);
@@ -301,10 +330,20 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
         @Override
         public void onResponse(String response, int id) {
-            Gson gson = new Gson();
-            sewingEntity = gson.fromJson(response, SewingMachineEntity.class);
-            setSewingInfo(sewingEntity);
-            mCache.put(Constant.sewingInfoCache, sewingEntity);
+            try{
+                if(type == 1 || type == 3) {
+                    Gson gson = new Gson();
+                    sewingEntity = gson.fromJson(response, SewingMachineEntity.class);
+                    setSewingInfo(sewingEntity);
+                    mCache.put(Constant.sewingInfoCache, sewingEntity);
+                } else if(type == 2 || type == 4) {
+                    Gson gson = new Gson();
+                    sewingUnlockEntity = gson.fromJson(response, SewingMachineEntity.class);
+                    setSewingInfo(sewingEntity);
+                }
+            } catch(Exception e) {
+
+            }
         }
 
         @Override
@@ -314,24 +353,26 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
     }
 
     private void setSewingInfo(SewingMachineEntity sewingEntity) {
-        if(ShareUtils.getMachineType(getActivity()) == 3) {
+        if(ShareUtils.getMachineType(getActivity()) == 3) { //平缝机
             SewingMachineFragment sewingMachineFragment = new SewingMachineFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(SewingMachineEntity.class.getSimpleName(), sewingEntity);
+            bundle.putSerializable("lockState", sewingUnlockEntity);
             sewingMachineFragment.setArguments(bundle);
 
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fh_sewingMachineLayout, sewingMachineFragment)
-                    .commit();
-        } else if(ShareUtils.getMachineType(getActivity()) == 1) {
+                    .commitAllowingStateLoss();
+        } else if(ShareUtils.getMachineType(getActivity()) == 1) { //包缝机
             OverlockMachineFragment machineFragment = new OverlockMachineFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(SewingMachineEntity.class.getSimpleName(), sewingEntity);
+            bundle.putSerializable("lockState", sewingUnlockEntity);
             machineFragment.setArguments(bundle);
 
             getChildFragmentManager().beginTransaction()
                     .replace(R.id.fh_sewingMachineLayout, machineFragment)
-                    .commit();
+                    .commitAllowingStateLoss();
         }
     }
 
@@ -368,9 +409,14 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
 
         @Override
         public void onResponse(String response, int id) {
-            siteInfoEntity = new Gson().fromJson(response, SiteInfoEntity.class);
-            setSiteInfo(siteInfoEntity);
+            try {
+                siteInfoEntity = new Gson().fromJson(response, SiteInfoEntity.class);
+                setSiteInfo(siteInfoEntity);
             mCache.put(Constant.siteInfoCache, siteInfoEntity);
+            } catch(Exception e) {
+
+            }
+
         }
 
         @Override
@@ -395,7 +441,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 titles.add("工序编号 " + entity.getProcessData().get(i).getProcessCode());
             }
 
-            mViewPager.setOffscreenPageLimit(entity.getProcessData().size());
+//            mViewPager.setOffscreenPageLimit(entity.getProcessData().size());
             siteNum.setText(entity.getStationCode());
             if(siteFgList.size() == 1) {
                 tablayout.setVisibility(View.GONE);
@@ -407,27 +453,26 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 mViewPager.setAdapter(adapter);
                 tablayout.setupWithViewPager(mViewPager);
                 tablayout.setTabsFromPagerAdapter(adapter);
+
+                if(videoFragment != null) {
+                    videoFragment.getBDView().onStop();
+                    videoFragment.getBDView().onDestroy();
+                    videoFragment = null;
+                }
+                bookFragment = new InstructBookOnePageFragment();
+                String path = ImageUtils.checkContainImage(imageList, entity.getProcessData().get(0).getProcessCode());
+                if(!StringUtil.isEmpty(path)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("source", path);
+                    bookFragment.setArguments(bundle);
+                    getChildFragmentManager().beginTransaction()
+                            .replace(R.id.fh_linearlayout, bookFragment)
+                            .commitAllowingStateLoss();
+                } else {
+                    Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
+                }
             } else {
                 adapter.notifyDataSetChanged();
-            }
-
-            if(videoFragment != null) {
-                videoFragment.getBDView().onStop();
-                videoFragment.getBDView().onDestroy();
-                videoFragment = null;
-            }
-
-            bookFragment = new InstructBookOnePageFragment();
-            String path = ImageUtils.checkContainImage(imageList, entity.getProcessData().get(0).getProcessCode());
-            if(!StringUtil.isEmpty(path)) {
-                Bundle bundle = new Bundle();
-                bundle.putString("source", path);
-                bookFragment.setArguments(bundle);
-                getChildFragmentManager().beginTransaction()
-                        .replace(R.id.fh_linearlayout, bookFragment)
-                        .commit();
-            } else {
-                Toast.makeText(getActivity(), "无此作业指导书", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -455,7 +500,15 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
             //获取站点信息缓存
             setSiteInfo(siteInfoEntity);
         }
+    }
 
+    public void removeCache() {
+        timer.cancel();
+
+        mCache.remove(Constant.empInfoCache); //获取员工信息缓存
+        mCache.remove(Constant.productOrderCache); //获取生产单信息缓存
+        mCache.remove(Constant.sewingInfoCache); //缝纫机信息缓存
+        mCache.remove(Constant.siteInfoCache); //站点信息缓存
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.activity.MainActivity4;
 import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.SewingMachineEntity;
 
@@ -16,7 +17,7 @@ import videomonitor.videomonitor.entity.SewingMachineEntity;
  * Created by Administrator on 2017-09-14.
  */
 
-public class SewingMachineFragment extends Fragment {
+public class SewingMachineFragment extends Fragment implements View.OnClickListener {
     private View view;
     //缝纫机信息
     private TextView code; //设备编号
@@ -30,8 +31,11 @@ public class SewingMachineFragment extends Fragment {
     private TextView presserNum; //本次压脚抬起数
     private TextView sumPresserNum; //累计压脚抬起数
     private TextView speed; //当前转速
+    private TextView tvLockState; //锁的状态
+    private TextView btnLockState; //锁的状态
 
     private SewingMachineEntity sewingEntity;
+    private SewingMachineEntity sewingUnlockEntity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +56,9 @@ public class SewingMachineFragment extends Fragment {
         sumPresserNum = (TextView) view.findViewById(R.id.sumPresserNum); //累计压脚抬起数
         speed = (TextView) view.findViewById(R.id.speed); //当前转速
 
+        tvLockState = (TextView) view.findViewById(R.id.fom_tvLockState); //锁的状态
+        btnLockState = (TextView) view.findViewById(R.id.fom_btnLockState); //锁的状态
+        btnLockState.setOnClickListener(this);
 
         code.setText(ShareUtils.getSewingId(getActivity())); //设备编号
         modelNo.setText("MK009"); //型号
@@ -67,6 +74,31 @@ public class SewingMachineFragment extends Fragment {
             speed.setText(sewingEntity.getRetBody().getParam11() + "RPM"); //当前转速
         }
 
+        if(sewingUnlockEntity == null) {
+            tvLockState.setVisibility(View.GONE);
+            btnLockState.setVisibility(View.GONE);
+        } else {
+            tvLockState.setVisibility(View.VISIBLE);
+            btnLockState.setVisibility(View.VISIBLE);
+            if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
+                tvLockState.setText("解锁成功");
+                btnLockState.setText("锁定");
+            } else {  //解锁失败
+                tvLockState.setText("解锁失败");
+                btnLockState.setText("重新解锁");
+            }
+        }
+
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fom_btnLockState:
+//                lockStateListener.clickLockState(1,1);//第一个参数(1:包缝机 3:平缝机)； 第二个参数(接口是否调用成功)
+                ((MainActivity4)getActivity()).clickOverLockListener(3,1);
+                break;
+        }
     }
 }

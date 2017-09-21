@@ -80,6 +80,13 @@ public class ShareUtils {
         editor.commit();
     }
 
+    public static void setTime(Context context, int time) {
+        SharedPreferences sp = context.getSharedPreferences(ShareUtils.dbName, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("time", time);
+        editor.commit();
+    }
+
     public static String getProductOrderId(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
         String id=preferences.getString("productOrderId", "D293-HR");
@@ -87,14 +94,25 @@ public class ShareUtils {
     }
 
     public static String getSewingId(Context context) {
-        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        String id=preferences.getString("sewingId", "cisma001");
+        String id = "HZ2GD10019";
+        try {
+            SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+            id = preferences.getString("sewingId", "HZ2GD10019");
+        }catch (Exception e) {
+            id = "HZ2GD10019";
+        }
         return id;
     }
 
     public static String getSiteId(Context context) {
-        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        String id=preferences.getString("siteId", "13");
+        String id;
+        try {
+            SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+            id=preferences.getString("siteId", "13");
+        } catch (Exception e) {
+            id = "13";
+        }
+
         return id;
     }
 
@@ -123,8 +141,14 @@ public class ShareUtils {
 
     public static String getUrl(Context context) {
         SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
-        String id=preferences.getString("url", "http://112.124.63.137:8016");
+        String id = preferences.getString("url", "http://112.124.63.137:8016");
         return id;
+    }
+
+    public static int getTime(Context context) {
+        SharedPreferences preferences= context.getSharedPreferences(ShareUtils.dbName, Context.MODE_PRIVATE);
+        int time = preferences.getInt("time", 30);
+        return time;
     }
 
     public static void clear(Context context) {

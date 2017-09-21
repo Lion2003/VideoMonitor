@@ -26,8 +26,8 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
     private View view;
     private RadioGroup radioGroup;
     private RadioButton bfj, pfj;
-    private EditText productorderId, edColor, frjId, siteId, url;
-    private Spinner spinner;
+    private EditText productorderId, edColor, edSize, frjId, siteId, url, time;
+//    private Spinner spinner;
     private Button btn;
 
     private int type = 1;
@@ -42,40 +42,41 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
         frjId = (EditText) view.findViewById(R.id.frjId);
         edColor = (EditText) view.findViewById(R.id.color);
         url = (EditText) view.findViewById(R.id.url);
-        spinner = (Spinner) view.findViewById(R.id.size);
+        time = (EditText) view.findViewById(R.id.time);
+        edSize = (EditText) view.findViewById(R.id.size);
 
         siteId = (EditText) view.findViewById(R.id.siteId);
         btn = (Button) view.findViewById(R.id.save);
         btn.setOnClickListener(this);
 
-        int position = 0;
-        Resources resources =getResources();
-        String[] list = resources.getStringArray(R.array.size_labels);
-        for(int i = 0; i < list.length; i++) {
-            if(ShareUtils.getSize(getActivity()).equals(list[i])) {
-                position = i;
-            }
-        }
+//        int position = 0;
+//        Resources resources =getResources();
+//        String[] list = resources.getStringArray(R.array.size_labels);
+//        for(int i = 0; i < list.length; i++) {
+//            if(ShareUtils.getSize(getActivity()).equals(list[i])) {
+//                position = i;
+//            }
+//        }
 
         productorderId.setText(ShareUtils.getProductOrderId(getActivity()));
         edColor.setText(ShareUtils.getColor(getActivity()));
-        spinner.setSelection(position);
+        edSize.setText(ShareUtils.getSize(getActivity()));
+//        spinner.setSelection(position);
         frjId.setText(ShareUtils.getSewingId(getActivity()));
         siteId.setText(ShareUtils.getSiteId(getActivity()));
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Resources resources =getResources();
-                String[] list = resources.getStringArray(R.array.size_labels);
-//                Toast.makeText(getActivity(), spinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Resources resources =getResources();
+//                String[] list = resources.getStringArray(R.array.size_labels);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -99,6 +100,7 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
             pfj.setChecked(true);
         }
         url.setText(ShareUtils.getUrl(getActivity()));
+        time.setText(ShareUtils.getTime(getActivity()) + "");
         return view;
     }
 
@@ -112,7 +114,7 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                 } else if(StringUtil.isEmpty(edColor.getText().toString())){
                     Toast.makeText(getActivity(), "请输入生产单颜色", Toast.LENGTH_SHORT).show();
                     return;
-                }  else if(StringUtil.isEmpty(spinner.getSelectedItem().toString())){
+                }  else if(StringUtil.isEmpty(edSize.getText().toString())){
                     Toast.makeText(getActivity(), "请输入生产单颜色", Toast.LENGTH_SHORT).show();
                     return;
                 } else if(StringUtil.isEmpty(frjId.getText().toString())) {
@@ -124,13 +126,21 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                 } else if(StringUtil.isEmpty(url.getText().toString())) {
                     Toast.makeText(getActivity(), "请输入站点编号", Toast.LENGTH_SHORT).show();
                     return;
+                } else if(StringUtil.isEmpty(time.getText().toString())) {
+                    Toast.makeText(getActivity(), "请输入刷新时间", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(Integer.parseInt(time.getText().toString()) < 5) {
+                    Toast.makeText(getActivity(), "刷新时间要大于5秒", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 ShareUtils.saveInfo(getActivity(), type, productorderId.getText().toString().trim(),
                         edColor.getText().toString().trim(),
-                        spinner.getSelectedItem().toString(),
+                        edSize.getText().toString(),
                         frjId.getText().toString().trim(),
                         siteId.getText().toString().trim());
                 ShareUtils.setUrl(getActivity(), url.getText().toString());
+                ShareUtils.setTime(getActivity(), Integer.parseInt(time.getText().toString()));
                 Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
                 break;
 

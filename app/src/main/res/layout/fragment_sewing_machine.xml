@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SJ00033"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="XG003"
+            android:text=""
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -70,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0分钟"
+            android:text="分钟"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
@@ -83,7 +83,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0针"
+            android:text="针"
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -103,7 +103,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0小时"
+            android:text="小时"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
@@ -135,7 +135,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0次"
+            android:text="次"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
@@ -148,7 +148,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0次"
+            android:text="次"
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -168,7 +168,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0次"
+            android:text="次"
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
@@ -181,7 +181,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0次"
+            android:text="次"
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -201,19 +201,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="0RPM"
+            android:text="RPM"
             style="@style/textStyle"/>
         <TextView
+            android:id="@+id/fom_tvLockState"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text=""
-            style="@style/textStyle"/>
+            style="@style/textStyle"
+            android:textColor="@color/color_FE2525"/>
         <TextView
+            android:id="@+id/fom_btnLockState"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/mp_35"
             android:layout_weight="1"
             android:text=""
-            style="@style/textStyle"/>
+            style="@style/textStyle"
+            android:gravity="center_vertical"
+            android:background="@drawable/em_button_login_bg"
+            android:textSize="@dimen/f_16"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

@@ -2,9 +2,14 @@ package videomonitor.videomonitor.activity;
 
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import videomonitor.videomonitor.R;
+import videomonitor.videomonitor.constant.Constant;
+import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.EmpInfoEntity;
 import videomonitor.videomonitor.fragment.HomePagerFragment;
 import videomonitor.videomonitor.fragment.InstructBookFragment;
@@ -22,11 +29,12 @@ import videomonitor.videomonitor.fragment.VideoStandardFragment;
 import videomonitor.videomonitor.utils.StringUtil;
 
 @SuppressLint("NewApi")
-public class MainActivity4 extends BaseActivity {
+public class MainActivity4 extends BaseActivity implements View.OnClickListener {
 
     protected static final String TAG = "MainActivity4";
 
     private Button[] mTabs;
+    private Button btnLogout;
     private HomePagerFragment homePagerFragment;
     private VideoStandardFragment videoStandardFragment;
     private InstructionBookListFragment instructBookFragment;
@@ -49,7 +57,7 @@ public class MainActivity4 extends BaseActivity {
         setContentView(R.layout.activity_main4);
 
         empInfoEntity= (EmpInfoEntity) getIntent().getSerializableExtra(EmpInfoEntity.class.getSimpleName());
-        CURRENT_ID = getIntent().getStringExtra("CURRENT_ID").trim();
+        CURRENT_ID = getIntent().getStringExtra("CURRENT_ID");
         if(StringUtil.isEmpty(CURRENT_ID)) {
             CURRENT_ID = "2007001023";
         }
@@ -92,6 +100,9 @@ public class MainActivity4 extends BaseActivity {
      * init views
      */
     private void initView() {
+        btnLogout = (Button) findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(this);
+
         mTabs = new Button[4];
         mTabs[0] = (Button) findViewById(R.id.btn_workbench);
         mTabs[1] = (Button) findViewById(R.id.btn_conversation);
@@ -165,4 +176,39 @@ public class MainActivity4 extends BaseActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_logout:
+                Dialog myDialog = new AlertDialog.Builder(this)
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setTitle("提示")
+                        .setMessage("是否退出登录")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface myDialog, int which) {
+                                homePagerFragment.removeCache();
+                                Intent it = new Intent(MainActivity4.this, LoginActivity.class);
+                                startActivity(it);
+                                MainActivity4.this.finish();
+//                                System.exit(0);
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).create();
+                myDialog.show() ;
+                break;
+        }
+    }
+
+    public void clickOverLockListener(int type, int state) {
+        Toast.makeText(this, type + ", "+ state, Toast.LENGTH_SHORT).show();
+        homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                ShareUtils.getMachineType(this),
+                ShareUtils.getSewingId(this));
+    }
 }

@@ -3,15 +3,16 @@ package videomonitor.videomonitor.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -29,6 +29,10 @@ import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.dialog.CustomProgressDialog;
 import videomonitor.videomonitor.entity.EmpInfoEntity;
+import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
+import videomonitor.videomonitor.entity.SewingMachineEntity;
+import videomonitor.videomonitor.entity.SiteInfoEntity;
+import videomonitor.videomonitor.utils.ACache;
 import videomonitor.videomonitor.utils.StringUtil;
 
 /**
@@ -37,30 +41,36 @@ import videomonitor.videomonitor.utils.StringUtil;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener{
     public static String CURRENT_ID;
-//    private AutoCompleteTextView focus;
+    private AutoCompleteTextView focus;
 
 //    private MediaPlayer myMediaPlayer = null;				    // 媒体播放
 
-//    private ImageView imgLogin;
+    private ImageView imgLogin;
     private Dialog dialog;
 
-//    private ImageView imgArrow;
+    private ImageView imgArrow;
 
-    private Button btnLogin;
+    private Button btnLogin, btnSetting;
+    private ACache mCache;
+    private EmpInfoEntity empInfoCache;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        int flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM;
-//        getWindow().addFlags(flags);0
-        // 隐藏标题栏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        // 隐藏状态栏
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_login);
-        MobclickAgent.onProfileSignIn("54");
+//        getWindow().addFlags(flags);
+        try{
+            //         隐藏标题栏
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            // 隐藏状态栏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            setContentView(R.layout.activity_login);
 
-        btnLogin = (Button) findViewById(R.id.al_login);
-        btnLogin.setOnClickListener(this);
+            getCache();
+
+            btnLogin = (Button) findViewById(R.id.al_login);
+            btnSetting = (Button) findViewById(R.id.al_setting);
+            btnLogin.setOnClickListener(this);
+            btnSetting.setOnClickListener(this);
 //        imgLogin = (ImageView) findViewById(R.id.img_login);
 //        imgLogin.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -68,38 +78,43 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 //            }
 //        });
 
-        dialog = CustomProgressDialog.createLoadingDialog(this, "登录中，请稍后。。。");
-        dialog.setCancelable(true);
+            dialog = CustomProgressDialog.createLoadingDialog(this, "登录中，请稍后。。。");
+            dialog.setCancelable(true);
 
-//        focus = (AutoCompleteTextView) findViewById(R.id.focus);
-//        focus.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-//                sound();
-//                if (((EditText) view).getText().toString().length() == 10) {
-//                    if(CURRENT_ID == null || CURRENT_ID.length() == 0) {
-//                        dialog.show();
-//                        CURRENT_ID = readCodeFromScanner(view);
-//                        Log.d("CARD_ID",CURRENT_ID);
-//                        new Handler().postDelayed(new Runnable() {
-//                            @Override
-//                            public void run() {
-////                                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
-////                                it.putExtra("CURRENT_ID", CURRENT_ID);
-////                                startActivity(it);
-////                                finish();
-//                                getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
-//                            }
-//                        }, 1000);
-//
-//                    }
-//                }
-//                return false;
-//            }
-//        });
+            focus = (AutoCompleteTextView) findViewById(R.id.focus);
+            focus.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View view, int i, KeyEvent keyEvent) {
+//                    sound();
+                    if (((EditText) view).getText().toString().length() == 10) {
+                        if(CURRENT_ID == null || CURRENT_ID.length() == 0) {
+                            dialog.show();
+                            CURRENT_ID = readCodeFromScanner(view);
+                            Log.d("CARD_ID",CURRENT_ID);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+//                                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+//                                it.putExtra("CURRENT_ID", CURRENT_ID);
+//                                startActivity(it);
+//                                finish();
+                                    getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
+                                }
+                            }, 1000);
 
-//        imgArrow = (ImageView) findViewById(R.id.al_arrow);
-//        imgArrow.startAnimation(AnimationUtils.loadAnimation(this, R.anim.translate_anim));
+                        }
+                    }
+                    return false;
+                }
+            });
+
+            imgArrow = (ImageView) findViewById(R.id.al_arrow);
+            imgArrow.startAnimation(AnimationUtils.loadAnimation(this, R.anim.translate_anim));
+        } catch(Exception e) {
+            e.printStackTrace();
+            Log.e("阿什顿发斯蒂芬阿斯蒂芬",  e.toString());
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -177,6 +192,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 myDialog.show() ;
 
                 break;
+
+            case R.id.al_setting:
+                Intent it = new Intent(this, BaseSettingActivity.class);
+                startActivity(it);
+                break;
         }
     }
 
@@ -219,12 +239,27 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             it.putExtra("CURRENT_ID", CURRENT_ID);
             it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoEntity);
             startActivity(it);
+            mCache.put(Constant.empInfoCache, empInfoEntity);
+
             finish();
         }
 
         @Override
         public void inProgress(float progress, long total, int id) {
 //            mProgressBar.setProgress((int) (100 * progress));
+        }
+    }
+
+    private void getCache() {
+        mCache = ACache.get(this);
+        empInfoCache = (EmpInfoEntity) mCache.getAsObject(Constant.empInfoCache);
+        if(empInfoCache != null) {
+            //获取员工信息缓存
+            Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+            it.putExtra("CURRENT_ID", empInfoCache.getCardNo());
+            it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoCache);
+            startActivity(it);
+            finish();
         }
     }
 

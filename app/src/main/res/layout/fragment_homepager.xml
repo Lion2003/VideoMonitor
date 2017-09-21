@@ -145,14 +145,14 @@
                                     android:id="@+id/poCode"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="生产单  D-HR"
+                                    android:text="生产单  "
                                     style="@style/textStyle"
                                     android:gravity="center"/>
                                 <TextView
                                     android:id="@+id/color"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="颜   色  暗紫"
+                                    android:text="颜   色  "
                                     style="@style/textStyle"
                                     android:gravity="center"
                                     android:layout_marginTop="@dimen/mp_10"/>
@@ -166,14 +166,14 @@
                                     android:id="@+id/patternNo"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="款号  D2930"
+                                    android:text="款号  "
                                     style="@style/textStyle"
                                     android:gravity="center"/>
                                 <TextView
                                     android:id="@+id/size"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="尺码  3XL"
+                                    android:text="尺码  "
                                     style="@style/textStyle"
                                     android:gravity="center"
                                     android:layout_marginTop="@dimen/mp_10"/>
@@ -187,14 +187,14 @@
                                     android:id="@+id/customer"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="客户  浙江旭高"
+                                    android:text="客户  "
                                     style="@style/textStyle"
                                     android:gravity="center"/>
                                 <TextView
                                     android:id="@+id/amount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="数量  6800件"
+                                    android:text="数量  "
                                     style="@style/textStyle"
                                     android:gravity="center"
                                     android:layout_marginTop="@dimen/mp_10"/>
@@ -475,7 +475,7 @@
                             android:id="@+id/fsi_siteNum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="13"
+                            android:text=""
                             android:textSize="@dimen/f_15"
                             style="@style/textStyle"
                             android:textColor="@color/color_e24a4a"/>
@@ -489,7 +489,9 @@
                         app:tabSelectedTextColor="@color/status_bar_color"
                         app:tabIndicatorColor="@color/status_bar_color"
                         app:tabIndicatorHeight="@dimen/mp_3"
-                        app:tabTextAppearance="@style/TabLayoutTextStyle"/>
+                        app:tabTextAppearance="@style/TabLayoutTextStyle"
+                        app:tabMode="scrollable"
+                        app:tabGravity="fill"/>
                     <android.support.v4.view.ViewPager
                         android:id="@+id/fh_viewPager"
                         android:layout_width="match_parent"

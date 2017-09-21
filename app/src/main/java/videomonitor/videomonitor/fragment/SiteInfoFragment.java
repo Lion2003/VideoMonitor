@@ -57,7 +57,7 @@ public class SiteInfoFragment extends Fragment implements View.OnClickListener{
         processNumber.setText(entity.getProcessCode());
         processName.setText(entity.getProcessName());
         standardHour.setText(entity.getStandardHour() + "秒");
-        processPrice.setText(entity.getUnitPrice() + "元/秒");
+        processPrice.setText(entity.getUnitPrice() + "元");
         todayPlanNumber.setText(entity.getPlanNumber() + "件");
         todayCompanyNumber.setText(entity.getFinishNumber() + "件");
         todayPlanSalary.setText(entity.getPlanWages() + "元");
