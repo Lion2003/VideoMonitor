@@ -86,8 +86,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                 @Override
                 public boolean onKey(View view, int i, KeyEvent keyEvent) {
 //                    sound();
-                    if (((EditText) view).getText().toString().length() == 10) {
-                        if(CURRENT_ID == null || CURRENT_ID.length() == 0) {
+                    if (((EditText) view).getText().toString().length() >= 10) {
+//                        if(CURRENT_ID == null || CURRENT_ID.length() == 0) {
                             dialog.show();
                             CURRENT_ID = readCodeFromScanner(view);
                             Log.d("CARD_ID",CURRENT_ID);
@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                                 }
                             }, 1000);
 
-                        }
+//                        }
                     }
                     return false;
                 }
@@ -115,6 +115,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             Log.e("阿什顿发斯蒂芬阿斯蒂芬",  e.toString());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static byte charToByteAscii2(char ch) {
+        byte byteAscii = (byte)ch;
+        return byteAscii;
     }
 
     @Override

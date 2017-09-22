@@ -1,12 +1,10 @@
 package videomonitor.videomonitor.activity;
 
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -14,15 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.EmpInfoEntity;
+import videomonitor.videomonitor.entity.LockState;
 import videomonitor.videomonitor.fragment.HomePagerFragment;
-import videomonitor.videomonitor.fragment.InstructBookFragment;
 import videomonitor.videomonitor.fragment.InstructionBookListFragment;
 import videomonitor.videomonitor.fragment.MineFragment;
 import videomonitor.videomonitor.fragment.VideoStandardFragment;
@@ -187,6 +188,24 @@ public class MainActivity4 extends BaseActivity implements View.OnClickListener 
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(final DialogInterface myDialog, int which) {
+                                MyApplication.isLockState = 0;
+                                if(ShareUtils.getMachineType(MainActivity4.this) == 1) { //如果是包缝机，那么锁定包缝机
+                                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                                            2,
+                                            ShareUtils.getSewingId(MainActivity4.this),
+                                            new Gson().toJson(new LockState(2, 0, ShareUtils.getSewingId(MainActivity4.this)))); //进行锁定
+                                } else if(ShareUtils.getMachineType(MainActivity4.this) == 3) { //如果是平缝机， 那么锁定平缝机
+                                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                                            4,
+                                            ShareUtils.getSewingId(MainActivity4.this),
+                                            new Gson().toJson(new LockState(4, 0, ShareUtils.getSewingId(MainActivity4.this)))); //进行锁定
+                                } else if(ShareUtils.getMachineType(MainActivity4.this) == 5) { //如果是下摆机， 那么锁定下摆机
+                                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                                            6,
+                                            ShareUtils.getSewingId(MainActivity4.this),
+                                            new Gson().toJson(new LockState(6, 0, ShareUtils.getSewingId(MainActivity4.this)))); //进行锁定
+                                }
+
                                 homePagerFragment.removeCache();
                                 Intent it = new Intent(MainActivity4.this, LoginActivity.class);
                                 startActivity(it);
@@ -205,10 +224,65 @@ public class MainActivity4 extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    public void clickOverLockListener(int type, int state) {
-        Toast.makeText(this, type + ", "+ state, Toast.LENGTH_SHORT).show();
-        homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
-                ShareUtils.getMachineType(this),
-                ShareUtils.getSewingId(this));
+    public void clickOverLockListener(int type, boolean isRequestSuccess) {
+        if(isRequestSuccess) { //如果请求成功，那么进行锁定操作
+            if(MyApplication.isLockState == 1) {
+                MyApplication.isLockState = 0;
+                if(ShareUtils.getMachineType(this) == 1) { //如果是包缝机，那么锁定包缝机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            2,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(2, 0, ShareUtils.getSewingId(this)))); //进行锁定
+                } else if(ShareUtils.getMachineType(this) == 3) { //如果是平缝机， 那么锁定平缝机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            4,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(4, 0, ShareUtils.getSewingId(this)))); //进行锁定
+                } else if(ShareUtils.getMachineType(this) == 5) { //如果是下摆机， 那么锁定下摆机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            6,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(6, 0, ShareUtils.getSewingId(this)))); //进行锁定
+                }
+            } else if(MyApplication.isLockState == 0) {
+                MyApplication.isLockState = 1;
+                if(ShareUtils.getMachineType(this) == 1) { //如果是包缝机，那么解锁包缝机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            2,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(2, 1, ShareUtils.getSewingId(this)))); //进行解锁
+                } else if(ShareUtils.getMachineType(this) == 3) { //如果是平缝机， 那么解锁平缝机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            4,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(4, 1, ShareUtils.getSewingId(this)))); //进行解锁
+                } else if(ShareUtils.getMachineType(this) == 5) { //如果是下摆机， 那么解锁下摆机
+                    homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                            6,
+                            ShareUtils.getSewingId(this),
+                            new Gson().toJson(new LockState(6, 1, ShareUtils.getSewingId(this)))); //进行解锁
+                }
+            }
+
+
+        } else { //如果请求失败，那么进行重新解锁操作
+            MyApplication.isLockState = 1;
+            if(ShareUtils.getMachineType(this) == 1) { //如果是包缝机，那么解锁包缝机
+                homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                        2,
+                        ShareUtils.getSewingId(this),
+                        new Gson().toJson(new LockState(2, 1, ShareUtils.getSewingId(this)))); //进行解锁
+            } else if(ShareUtils.getMachineType(this) == 3) { //如果是平缝机， 那么解锁平缝机
+                homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                        4,
+                        ShareUtils.getSewingId(this),
+                        new Gson().toJson(new LockState(4, 1, ShareUtils.getSewingId(this)))); //进行解锁
+            } else if(ShareUtils.getMachineType(this) == 5) { //如果是下摆机， 那么解锁下摆机
+                homePagerFragment.getSweingOrderInfo(Constant.sweingInfoUrl1,
+                        6,
+                        ShareUtils.getSewingId(this),
+                        new Gson().toJson(new LockState(6, 1, ShareUtils.getSewingId(this)))); //进行解锁
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@ import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import videomonitor.videomonitor.ImageUtils;
+import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.VideoUtils;
 import videomonitor.videomonitor.activity.FullScreenBookActivity;
@@ -37,6 +38,8 @@ import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.EmpInfoEntity;
 import videomonitor.videomonitor.entity.ImageInfo;
+import videomonitor.videomonitor.entity.LockState;
+import videomonitor.videomonitor.entity.Machine;
 import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
 import videomonitor.videomonitor.entity.SewingMachineEntity;
 import videomonitor.videomonitor.entity.SiteInfoEntity;
@@ -136,14 +139,23 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 ShareUtils.getProductOrderId(getActivity()),
                 ShareUtils.getColor(getActivity()),
                 ShareUtils.getSize(getActivity()));
+
+        //解锁操作
         if(ShareUtils.getMachineType(getActivity()) == 1) { //如果是包缝机，那么解锁包缝机
+            MyApplication.isLockState = 1;
             getSweingOrderInfo(Constant.sweingInfoUrl1,
                     2,
-                    ShareUtils.getSewingId(getActivity()));
+                    ShareUtils.getSewingId(getActivity()), new Gson().toJson(new LockState(2, 1, ShareUtils.getSewingId(getActivity()))));
         } else if(ShareUtils.getMachineType(getActivity()) == 3) { //如果是平缝机， 那么解锁平缝机
+            MyApplication.isLockState = 1;
             getSweingOrderInfo(Constant.sweingInfoUrl1,
                     4,
-                    ShareUtils.getSewingId(getActivity()));
+                    ShareUtils.getSewingId(getActivity()), new Gson().toJson(new LockState(4, 1, ShareUtils.getSewingId(getActivity()))));
+        } else if(ShareUtils.getMachineType(getActivity()) == 5) { //如果是下摆机， 那么解锁下摆机
+            MyApplication.isLockState = 1;
+            getSweingOrderInfo(Constant.sweingInfoUrl1,
+                    6,
+                    ShareUtils.getSewingId(getActivity()), new Gson().toJson(new LockState(6, 1, ShareUtils.getSewingId(getActivity()))));
         }
         return view;
     }
@@ -155,7 +167,8 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 case 1:
                     getSweingOrderInfo(Constant.sweingInfoUrl1,
                             ShareUtils.getMachineType(getActivity()),
-                            ShareUtils.getSewingId(getActivity()));
+                            ShareUtils.getSewingId(getActivity()),
+                            new Gson().toJson(new Machine(ShareUtils.getMachineType(getActivity()),ShareUtils.getSewingId(getActivity()))));
                     getSiteInfo(Constant.siteInfoUrl,
                             ShareUtils.getSiteId(getActivity()));
                     break;
@@ -280,15 +293,28 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         amount.setText("数量  " + productOrderEntity.getAmount()); //数量
     }
 
-    public class User {
-        private int type;
-        private String deviceNo;
+//    public class Machine {
+//        private int type;
+//        private String deviceNo;
+//
+//        public Machine(int type, String deviceNo) {
+//            this.type = type;
+//            this.deviceNo = deviceNo;
+//        }
+//    }
+//
+//    public class LockState {
+//        private int type;
+//        private int isLock;
+//        private String deviceNo;
+//
+//        public LockState(int type, int isLock, String deviceNo) {
+//            this.type = type;
+//            this.isLock = isLock;
+//            this.deviceNo = deviceNo;
+//        }
+//    }
 
-        public User(int type, String deviceNo) {
-            this.type = type;
-            this.deviceNo = deviceNo;
-        }
-    }
 
     /**
      * 获取缝纫机信息
@@ -296,11 +322,11 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
      * @param type  1:包缝机 2:解锁包缝机 3:平缝机 4:解锁平缝机
      * @param deviceNo  设备编码
      */
-    public void getSweingOrderInfo(String url, int type, String deviceNo) {
+    public void getSweingOrderInfo(String url, int type, String deviceNo, String json) {
         OkHttpUtils
                 .postString()
                 .url(url)
-                .content(new Gson().toJson(new User(type, deviceNo)))
+                .content(json)
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new MySweingCallback(type));
@@ -331,12 +357,12 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         @Override
         public void onResponse(String response, int id) {
             try{
-                if(type == 1 || type == 3) {
+                if(type == 1 || type == 3 || type == 5) {
                     Gson gson = new Gson();
                     sewingEntity = gson.fromJson(response, SewingMachineEntity.class);
                     setSewingInfo(sewingEntity);
                     mCache.put(Constant.sewingInfoCache, sewingEntity);
-                } else if(type == 2 || type == 4) {
+                } else if(type == 2 || type == 4 || type == 6) {
                     Gson gson = new Gson();
                     sewingUnlockEntity = gson.fromJson(response, SewingMachineEntity.class);
                     setSewingInfo(sewingEntity);
@@ -365,6 +391,16 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                     .commitAllowingStateLoss();
         } else if(ShareUtils.getMachineType(getActivity()) == 1) { //包缝机
             OverlockMachineFragment machineFragment = new OverlockMachineFragment();
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(SewingMachineEntity.class.getSimpleName(), sewingEntity);
+            bundle.putSerializable("lockState", sewingUnlockEntity);
+            machineFragment.setArguments(bundle);
+
+            getChildFragmentManager().beginTransaction()
+                    .replace(R.id.fh_sewingMachineLayout, machineFragment)
+                    .commitAllowingStateLoss();
+        }  else if(ShareUtils.getMachineType(getActivity()) == 5) { //包缝机
+            RimMachineFragment machineFragment = new RimMachineFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(SewingMachineEntity.class.getSimpleName(), sewingEntity);
             bundle.putSerializable("lockState", sewingUnlockEntity);
@@ -438,7 +474,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                 bundle1.putInt("position", i);
                 fragment1.setArguments(bundle1);
                 siteFgList.add(fragment1);
-                titles.add("工序编号 " + entity.getProcessData().get(i).getProcessCode());
+                titles.add("工序 " + entity.getProcessData().get(i).getProcessCode());
             }
 
 //            mViewPager.setOffscreenPageLimit(entity.getProcessData().size());

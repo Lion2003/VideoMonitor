@@ -28,6 +28,43 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="工序名称"
+                    style="@style/textStyle"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+                <TextView
+                    android:id="@+id/fsi_processName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    style="@style/textStyle"
+                    android:singleLine="true"
+                    android:ellipsize="end"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    style="@style/textStyle"/>
+                <TextView
+                    android:id="@+id/fsi_todayPlanSalary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    style="@style/textStyle"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/mp_15"
+                android:layout_marginTop="@dimen/mp_17"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="工序编号"
                     style="@style/textStyle"/>
                 <TextView
@@ -49,43 +86,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="秒"
-                    style="@style/textStyle"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/mp_15"
-                android:layout_marginTop="@dimen/mp_17"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="工序名称"
-                    style="@style/textStyle"
-                    android:singleLine="true"
-                    android:ellipsize="end"/>
-                <TextView
-                    android:id="@+id/fsi_processName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    style="@style/textStyle"
-                    android:singleLine="true"
-                    android:ellipsize="end"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="工序单价"
-                    style="@style/textStyle"/>
-                <TextView
-                    android:id="@+id/fsi_processPrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
                     style="@style/textStyle"/>
             </LinearLayout>
         </LinearLayout>
@@ -111,10 +111,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="今日计划数"
+                    android:text="完成数"
                     style="@style/textStyle"/>
                 <TextView
-                    android:id="@+id/fsi_todayPlanNumber"
+                    android:id="@+id/fsi_todayCompanyNumber"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -124,10 +124,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="今日计划工资"
+                    android:text="工序单价"
                     style="@style/textStyle"/>
                 <TextView
-                    android:id="@+id/fsi_todayPlanSalary"
+                    android:id="@+id/fsi_processPrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -144,20 +144,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="今日完成数"
-                    style="@style/textStyle"/>
-                <TextView
-                    android:id="@+id/fsi_todayCompanyNumber"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="件"
-                    style="@style/textStyle"/>
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="今日已拿工资"
+                    android:text="结算工资"
                     style="@style/textStyle"
                     android:textColor="@color/color_FE2525"/>
                 <TextView
@@ -168,6 +155,19 @@
                     android:text="元"
                     style="@style/textStyle"
                     android:textColor="@color/color_FE2525"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    style="@style/textStyle"/>
+                <TextView
+                    android:id="@+id/fsi_todayPlanNumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    style="@style/textStyle"/>
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout

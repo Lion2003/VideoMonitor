@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.activity.MainActivity4;
 import videomonitor.videomonitor.db.ShareUtils;
@@ -36,6 +37,7 @@ public class RimMachineFragment  extends Fragment implements View.OnClickListene
 
     private SewingMachineEntity sewingEntity;
     private SewingMachineEntity sewingUnlockEntity;
+    private boolean isRequestSuccess = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,29 +66,46 @@ public class RimMachineFragment  extends Fragment implements View.OnClickListene
         code.setText(ShareUtils.getSewingId(getActivity())); //设备编号
 //        modelNo.setText("MK009"); //型号
         if(sewingEntity != null && sewingEntity.getRetBody() != null) {
-            switch (sewingEntity.getRetBody().getParam1()) {
-                case "0":
-                    thisBootTime.setText("待机"); //前剪线累计次数
-                    break;
-                case "1":
-                    thisBootTime.setText("电机运转"); //前剪线累计次数
-                    break;
-                case "2":
-                    thisBootTime.setText("仅模式运转"); //前剪线累计次数
-                    break;
-                case "3":
-                    thisBootTime.setText("电机和模式都运转"); //前剪线累计次数
-                    break;
-            }
-            sumBootTime.setText(sewingEntity.getRetBody().getParam2() + "转"); //后剪线累计次数
-            cutLineNum.setText(sewingEntity.getRetBody().getParam3() + "次"); //后踏剪线累计次数
-            sumCutLineNum.setText(sewingEntity.getRetBody().getParam4() + "次"); //一次前后剪线间隔时间
+            thisBootTime.setText(sewingEntity.getRetBody().getParam1() + "转"); //前剪线累计次数
+            sumBootTime.setText(sewingEntity.getRetBody().getParam5() + "毫米"); //后剪线累计次数
+            cutLineNum.setText(sewingEntity.getRetBody().getParam10() + ""); //后踏剪线累计次数
+            sumCutLineNum.setText(sewingEntity.getRetBody().getParam11() + ""); //一次前后剪线间隔时间
 //            speed.setText(sewingEntity.getRetBody().getParam5() + "次"); //针数累计次数
 
-            pinNum.setText(sewingEntity.getRetBody().getParam5() + "次"); //自动抬压脚前抬累计次数
-            sumPinNum.setText(sewingEntity.getRetBody().getParam6() + "次"); //自动抬压脚后抬累计次数
-            presserNum.setText(sewingEntity.getRetBody().getParam7() + "分"); //前吸气累计次数
-            sumPresserNum.setText(sewingEntity.getRetBody().getParam8() + "转"); //后吸气累计次数
+            pinNum.setText(sewingEntity.getRetBody().getParam13() + "件"); //自动抬压脚前抬累计次数
+            sumPinNum.setText(sewingEntity.getRetBody().getParam14() + ""); //自动抬压脚后抬累计次数
+            presserNum.setText(sewingEntity.getRetBody().getParam22() + ""); //前吸气累计次数
+            sumPresserNum.setText(sewingEntity.getRetBody().getParam32() + ""); //后吸气累计次数
+            if(sewingEntity.getRetBody().getParam11() != null) {
+                switch (sewingEntity.getRetBody().getParam11()) {
+                    case "0":
+                        sumCutLineNum.setText("手动"); //前剪线累计次数
+                        break;
+                    case "1":
+                        sumCutLineNum.setText("自动"); //前剪线累计次数
+                        break;
+                }
+            }
+            if(sewingEntity.getRetBody().getParam22() != null) {
+                switch (sewingEntity.getRetBody().getParam22()) {
+                    case "0":
+                        presserNum.setText("开"); //前剪线累计次数
+                        break;
+                    case "1":
+                        presserNum.setText("关"); //前剪线累计次数
+                        break;
+                }
+            }
+            if(sewingEntity.getRetBody().getParam32() != null) {
+                switch (sewingEntity.getRetBody().getParam32()) {
+                    case "0":
+                        sumPresserNum.setText("空闲"); //前剪线累计次数
+                        break;
+                    case "1":
+                        sumPresserNum.setText("调试"); //前剪线累计次数
+                        break;
+                }
+            }
         }
 
         if(sewingUnlockEntity == null) {
@@ -96,9 +115,16 @@ public class RimMachineFragment  extends Fragment implements View.OnClickListene
             tvLockState.setVisibility(View.VISIBLE);
             btnLockState.setVisibility(View.VISIBLE);
             if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
-                tvLockState.setText("解锁成功");
-                btnLockState.setText("锁定");
+                isRequestSuccess = true;
+                if(MyApplication.isLockState == 1) {
+                    tvLockState.setText("解锁成功");
+                    btnLockState.setText("锁定");
+                } else {
+                    tvLockState.setText("锁定成功");
+                    btnLockState.setText("重新解锁");
+                }
             } else {  //解锁失败
+                isRequestSuccess = false;
                 tvLockState.setText("解锁失败");
                 btnLockState.setText("重新解锁");
             }
@@ -112,7 +138,7 @@ public class RimMachineFragment  extends Fragment implements View.OnClickListene
         switch (v.getId()) {
             case R.id.fom_btnLockState:
 //                lockStateListener.clickLockState(1,1);//第一个参数(1:包缝机 3:平缝机)； 第二个参数(接口是否调用成功)
-                ((MainActivity4)getActivity()).clickOverLockListener(1,1);
+                ((MainActivity4)getActivity()).clickOverLockListener(5, isRequestSuccess);
                 break;
         }
     }

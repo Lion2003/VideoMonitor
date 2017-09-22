@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.activity.MainActivity4;
 import videomonitor.videomonitor.db.ShareUtils;
@@ -36,12 +37,14 @@ public class SewingMachineFragment extends Fragment implements View.OnClickListe
 
     private SewingMachineEntity sewingEntity;
     private SewingMachineEntity sewingUnlockEntity;
+    private boolean isRequestSuccess = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sewing_machine, container, false);
 
         sewingEntity = (SewingMachineEntity) getArguments().getSerializable(SewingMachineEntity.class.getSimpleName());
+        sewingUnlockEntity = (SewingMachineEntity) getArguments().getSerializable("lockState");
 
         //实例化缝纫机信息控件
         code = (TextView) view.findViewById(R.id.code); //设备编号
@@ -81,9 +84,16 @@ public class SewingMachineFragment extends Fragment implements View.OnClickListe
             tvLockState.setVisibility(View.VISIBLE);
             btnLockState.setVisibility(View.VISIBLE);
             if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
-                tvLockState.setText("解锁成功");
-                btnLockState.setText("锁定");
+                isRequestSuccess = true;
+                if(MyApplication.isLockState == 1) {
+                    tvLockState.setText("解锁成功");
+                    btnLockState.setText("锁定");
+                } else {
+                    tvLockState.setText("锁定成功");
+                    btnLockState.setText("重新解锁");
+                }
             } else {  //解锁失败
+                isRequestSuccess = false;
                 tvLockState.setText("解锁失败");
                 btnLockState.setText("重新解锁");
             }
@@ -97,7 +107,7 @@ public class SewingMachineFragment extends Fragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.fom_btnLockState:
 //                lockStateListener.clickLockState(1,1);//第一个参数(1:包缝机 3:平缝机)； 第二个参数(接口是否调用成功)
-                ((MainActivity4)getActivity()).clickOverLockListener(3,1);
+                ((MainActivity4)getActivity()).clickOverLockListener(3, isRequestSuccess);
                 break;
         }
     }

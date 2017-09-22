@@ -190,37 +190,51 @@
         android:orientation="horizontal"
         android:layout_marginLeft="@dimen/mp_15"
         android:layout_marginBottom="@dimen/mp_14">
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="当前转速"
-            style="@style/textStyle"/>
-        <TextView
-            android:id="@+id/speed"
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="当前转速"
+                style="@style/textStyle"/>
+            <TextView
+                android:id="@+id/speed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="RPM"
+                style="@style/textStyle"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RPM"
-            style="@style/textStyle"/>
-        <TextView
-            android:id="@+id/fom_tvLockState"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text=""
-            style="@style/textStyle"
-            android:textColor="@color/color_FE2525"/>
-        <TextView
-            android:id="@+id/fom_btnLockState"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/mp_35"
-            android:layout_weight="1"
-            android:text=""
-            style="@style/textStyle"
-            android:gravity="center_vertical"
-            android:background="@drawable/em_button_login_bg"
-            android:textSize="@dimen/f_16"
-            android:textColor="@color/white"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/fom_tvLockState"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                style="@style/textStyle"
+                android:textColor="@color/color_FE2525"/>
+            <TextView
+                android:id="@+id/fom_btnLockState"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/mp_35"
+                android:layout_weight="1"
+                android:text=""
+                style="@style/textStyle"
+                android:gravity="center"
+                android:background="@drawable/em_button_login_bg"
+                android:textSize="@dimen/f_16"
+                android:textColor="@color/white"/>
+            </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -24,8 +24,8 @@ import videomonitor.videomonitor.utils.StringUtil;
 
 public class BaseSettingFragment extends Fragment implements View.OnClickListener {
     private View view;
-    private RadioGroup radioGroup;
-    private RadioButton bfj, pfj;
+    private RadioGroup radioGroup, rg1;
+    private RadioButton bfj, pfj, xbj;
     private EditText productorderId, edColor, edSize, frjId, siteId, url, time;
 //    private Spinner spinner;
     private Button btn;
@@ -36,8 +36,10 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_base_setting, container, false);
         radioGroup = (RadioGroup) view.findViewById(R.id.fbs_radioGroup);
+        rg1 = (RadioGroup) view.findViewById(R.id.radioGroup);
         bfj = (RadioButton) view.findViewById(R.id.fbs_bfj);
         pfj = (RadioButton) view.findViewById(R.id.fbs_pfj);
+        xbj = (RadioButton) view.findViewById(R.id.fbs_xbj);
         productorderId = (EditText) view.findViewById(R.id.producOrderId);
         frjId = (EditText) view.findViewById(R.id.frjId);
         edColor = (EditText) view.findViewById(R.id.color);
@@ -90,6 +92,32 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
                         type = 3;
                         ShareUtils.setMachineType(getActivity(), 3);
                         break;
+                    case R.id.fbs_xbj:
+                        type = 5;
+                        ShareUtils.setMachineType(getActivity(), 5);
+                        break;
+                }
+            }
+        });
+
+        rg1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb0:
+                        frjId.setText("HXP1170920074-2");
+                        break;
+                    case R.id.rb1:
+                        frjId.setText("HXP5170920033-2");
+                        break;
+
+                    case R.id.rb2:
+                        frjId.setText("HZ2GD10022");
+                        break;
+
+                    case R.id.rb3:
+                        frjId.setText("HZ2GD10023");
+                        break;
                 }
             }
         });
@@ -98,6 +126,8 @@ public class BaseSettingFragment extends Fragment implements View.OnClickListene
             bfj.setChecked(true);
         } else if(ShareUtils.getMachineType(getActivity()) == 3) {
             pfj.setChecked(true);
+        } else if(ShareUtils.getMachineType(getActivity()) == 5) {
+            xbj.setChecked(true);
         }
         url.setText(ShareUtils.getUrl(getActivity()));
         time.setText(ShareUtils.getTime(getActivity()) + "");

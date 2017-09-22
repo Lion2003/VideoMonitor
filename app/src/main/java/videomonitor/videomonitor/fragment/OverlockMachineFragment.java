@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.activity.MainActivity4;
 import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.entity.SewingMachineEntity;
+import videomonitor.videomonitor.utils.StringUtil;
 
 /**
  * 包缝机fragment
@@ -36,6 +38,7 @@ public class OverlockMachineFragment extends Fragment implements View.OnClickLis
 
     private SewingMachineEntity sewingEntity;
     private SewingMachineEntity sewingUnlockEntity;
+    private boolean isRequestSuccess = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,9 +99,16 @@ public class OverlockMachineFragment extends Fragment implements View.OnClickLis
             tvLockState.setVisibility(View.VISIBLE);
             btnLockState.setVisibility(View.VISIBLE);
             if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
-                tvLockState.setText("解锁成功");
-                btnLockState.setText("锁定");
+                isRequestSuccess = true;
+                if(MyApplication.isLockState == 1) {
+                    tvLockState.setText("解锁成功");
+                    btnLockState.setText("锁定");
+                } else {
+                    tvLockState.setText("锁定成功");
+                    btnLockState.setText("重新解锁");
+                }
             } else {  //解锁失败
+                isRequestSuccess = false;
                 tvLockState.setText("解锁失败");
                 btnLockState.setText("重新解锁");
             }
@@ -112,7 +122,7 @@ public class OverlockMachineFragment extends Fragment implements View.OnClickLis
         switch (v.getId()) {
             case R.id.fom_btnLockState:
 //                lockStateListener.clickLockState(1,1);//第一个参数(1:包缝机 3:平缝机)； 第二个参数(接口是否调用成功)
-                ((MainActivity4)getActivity()).clickOverLockListener(1,1);
+                ((MainActivity4)getActivity()).clickOverLockListener(1, isRequestSuccess);
                 break;
         }
     }

@@ -71,6 +71,23 @@ public class SewingMachineEntity implements Serializable {
         private String param13;
         private String param14;
         private String param15;
+        private String param16;
+        private String param17;
+        private String param18;
+        private String param19;
+        private String param20;
+        private String param21;
+        private String param22;
+        private String param23;
+        private String param24;
+        private String param25;
+        private String param26;
+        private String param27;
+        private String param28;
+        private String param29;
+        private String param30;
+        private String param31;
+        private String param32;
 
         public String getParam7() {
             return param7;
@@ -190,6 +207,142 @@ public class SewingMachineEntity implements Serializable {
 
         public void setParam15(String param15) {
             this.param15 = param15;
+        }
+
+        public String getParam16() {
+            return param16;
+        }
+
+        public void setParam16(String param16) {
+            this.param16 = param16;
+        }
+
+        public String getParam17() {
+            return param17;
+        }
+
+        public void setParam17(String param17) {
+            this.param17 = param17;
+        }
+
+        public String getParam18() {
+            return param18;
+        }
+
+        public void setParam18(String param18) {
+            this.param18 = param18;
+        }
+
+        public String getParam19() {
+            return param19;
+        }
+
+        public void setParam19(String param19) {
+            this.param19 = param19;
+        }
+
+        public String getParam20() {
+            return param20;
+        }
+
+        public void setParam20(String param20) {
+            this.param20 = param20;
+        }
+
+        public String getParam21() {
+            return param21;
+        }
+
+        public void setParam21(String param21) {
+            this.param21 = param21;
+        }
+
+        public String getParam22() {
+            return param22;
+        }
+
+        public void setParam22(String param22) {
+            this.param22 = param22;
+        }
+
+        public String getParam23() {
+            return param23;
+        }
+
+        public void setParam23(String param23) {
+            this.param23 = param23;
+        }
+
+        public String getParam24() {
+            return param24;
+        }
+
+        public void setParam24(String param24) {
+            this.param24 = param24;
+        }
+
+        public String getParam25() {
+            return param25;
+        }
+
+        public void setParam25(String param25) {
+            this.param25 = param25;
+        }
+
+        public String getParam26() {
+            return param26;
+        }
+
+        public void setParam26(String param26) {
+            this.param26 = param26;
+        }
+
+        public String getParam27() {
+            return param27;
+        }
+
+        public void setParam27(String param27) {
+            this.param27 = param27;
+        }
+
+        public String getParam28() {
+            return param28;
+        }
+
+        public void setParam28(String param28) {
+            this.param28 = param28;
+        }
+
+        public String getParam29() {
+            return param29;
+        }
+
+        public void setParam29(String param29) {
+            this.param29 = param29;
+        }
+
+        public String getParam30() {
+            return param30;
+        }
+
+        public void setParam30(String param30) {
+            this.param30 = param30;
+        }
+
+        public String getParam31() {
+            return param31;
+        }
+
+        public void setParam31(String param31) {
+            this.param31 = param31;
+        }
+
+        public String getParam32() {
+            return param32;
+        }
+
+        public void setParam32(String param32) {
+            this.param32 = param32;
         }
     }
 }

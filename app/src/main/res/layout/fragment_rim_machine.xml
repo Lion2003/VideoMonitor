@@ -63,27 +63,27 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="当前缝纫状态"
+            android:text="缝纫速度"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/thisBootTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="分钟"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="手动剪线累计次数"
+            android:text="生产件数"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/pinNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="针"
+            android:text=""
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -96,20 +96,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="实际点击转速"
+            android:text="缝纫针距"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumBootTime"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="转"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="故障码累计次数"
+            android:text="编码器"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumPinNum"
@@ -128,27 +128,27 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="剪线次数"
+            android:text="当前序号"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/cutLineNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="次"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="累计开机时间"
+            android:text="启动按钮"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/presserNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="分"
+            android:text=""
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout
@@ -161,20 +161,20 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="针数累计次数"
+            android:text="启动模式"
             style="@style/textStyle"/>
         <TextView
             android:id="@+id/sumCutLineNum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="次"
+            android:text=""
             style="@style/textStyle"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="运转平均速度"
+            android:text="当前机器工作状态"
             style="@style/textStyle"/>
 
         <TextView
@@ -182,7 +182,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="转"
+            android:text=""
             style="@style/textStyle"/>
     </LinearLayout>
     <LinearLayout

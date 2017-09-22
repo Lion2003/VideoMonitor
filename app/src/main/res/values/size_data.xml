@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="size_labels">
-        <item>S</item>
-        <item>M</item>
-        <item>L</item>
-        <item>XL</item>
-        <item>XXL</item>
-        <item>XXXL</item>
+        <item>HXP1170920074-2</item>
+        <item>HXP5170920033-2</item>
+        <item>HZ2GD10022</item>
+        <item>HZ2GD10023</item>
     </string-array>
 </resources>

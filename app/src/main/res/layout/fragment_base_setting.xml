@@ -74,13 +74,42 @@
         </RadioGroup>
         <EditText
             android:id="@+id/frjId"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="50dp"
             android:layout_marginLeft="@dimen/mp_20"
             android:hint="输入缝纫机编号"
             android:textSize="@dimen/f_14"
             android:focusable="true"/>
     </LinearLayout>
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:checkedButton="@+id/fbs_bfj"
+        android:layout_marginLeft="85dp"
+        android:gravity="center_vertical">
+        <RadioButton
+            android:id="@+id/rb0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HXP1170920074-2"/>
+        <RadioButton
+            android:id="@+id/rb1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HXP5170920033-2"/>
+        <RadioButton
+            android:id="@+id/rb2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HZ2GD10022"/>
+        <RadioButton
+            android:id="@+id/rb3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HZ2GD10023"/>
+    </RadioGroup>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
