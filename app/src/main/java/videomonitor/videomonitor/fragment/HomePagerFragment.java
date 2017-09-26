@@ -33,6 +33,7 @@ import videomonitor.videomonitor.MyApplication;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.VideoUtils;
 import videomonitor.videomonitor.activity.FullScreenBookActivity;
+import videomonitor.videomonitor.activity.LoginActivity;
 import videomonitor.videomonitor.adapter.SiteAdapter;
 import videomonitor.videomonitor.constant.Constant;
 import videomonitor.videomonitor.db.ShareUtils;
@@ -135,7 +136,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         // 60000，每隔60秒执行1次task。
         timer.schedule(task, 1000, ShareUtils.getTime(getActivity()) * 1000);
 
-        getProductionOrderInfo(Constant.productOrderInfoUrl,
+        getProductionOrderInfo(ShareUtils.getUrl(getActivity()) + "/api/po/",
                 ShareUtils.getProductOrderId(getActivity()),
                 ShareUtils.getColor(getActivity()),
                 ShareUtils.getSize(getActivity()));
@@ -169,7 +170,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                             ShareUtils.getMachineType(getActivity()),
                             ShareUtils.getSewingId(getActivity()),
                             new Gson().toJson(new Machine(ShareUtils.getMachineType(getActivity()),ShareUtils.getSewingId(getActivity()))));
-                    getSiteInfo(Constant.siteInfoUrl,
+                    getSiteInfo(ShareUtils.getUrl(getActivity()) + "/api/Station/",
                             ShareUtils.getSiteId(getActivity()));
                     break;
             }
@@ -254,6 +255,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
         @Override
         public void onBefore(Request request, int id) {
             Log.e("reeuest", "" + request + id);
+//            Toast.makeText(getActivity(), request.toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -362,6 +364,7 @@ public class HomePagerFragment extends Fragment implements SiteInfoFragment.Vide
                     sewingEntity = gson.fromJson(response, SewingMachineEntity.class);
                     setSewingInfo(sewingEntity);
                     mCache.put(Constant.sewingInfoCache, sewingEntity);
+//                    Toast.makeText(getActivity(), sewingEntity.getRetBody().getParam32().toString(), Toast.LENGTH_SHORT).show();
                 } else if(type == 2 || type == 4 || type == 6) {
                     Gson gson = new Gson();
                     sewingUnlockEntity = gson.fromJson(response, SewingMachineEntity.class);

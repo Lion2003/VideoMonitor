@@ -27,11 +27,9 @@ import okhttp3.Call;
 import okhttp3.Request;
 import videomonitor.videomonitor.R;
 import videomonitor.videomonitor.constant.Constant;
+import videomonitor.videomonitor.db.ShareUtils;
 import videomonitor.videomonitor.dialog.CustomProgressDialog;
 import videomonitor.videomonitor.entity.EmpInfoEntity;
-import videomonitor.videomonitor.entity.ProductOrderInfoEntity;
-import videomonitor.videomonitor.entity.SewingMachineEntity;
-import videomonitor.videomonitor.entity.SiteInfoEntity;
 import videomonitor.videomonitor.utils.ACache;
 import videomonitor.videomonitor.utils.StringUtil;
 
@@ -51,7 +49,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
     private ImageView imgArrow;
 
     private Button btnLogin, btnSetting;
-    private ACache mCache;
+//    private ACache mCache;
     private EmpInfoEntity empInfoCache;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
             setContentView(R.layout.activity_login);
 
-            getCache();
+//            getCache();
 
             btnLogin = (Button) findViewById(R.id.al_login);
             btnSetting = (Button) findViewById(R.id.al_setting);
@@ -98,7 +96,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 //                                it.putExtra("CURRENT_ID", CURRENT_ID);
 //                                startActivity(it);
 //                                finish();
-                                    getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
+//                                    getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
+                                    getEmpInfo(ShareUtils.getUrl(LoginActivity.this) + "/api/EmpInfo/", CURRENT_ID);
                                 }
                             }, 1000);
 
@@ -112,7 +111,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             imgArrow.startAnimation(AnimationUtils.loadAnimation(this, R.anim.translate_anim));
         } catch(Exception e) {
             e.printStackTrace();
-            Log.e("阿什顿发斯蒂芬阿斯蒂芬",  e.toString());
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
@@ -183,7 +181,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 //                                        startActivity(it);
 //                                        finish();
                                         CURRENT_ID = ed.getText().toString(); //"4990476";
-                                        getEmpInfo(Constant.empInfoUrl, CURRENT_ID);
+                                        getEmpInfo(ShareUtils.getUrl(LoginActivity.this) + "/api/EmpInfo/", CURRENT_ID);
                                     }
                                 }, 1500);
                             }
@@ -224,6 +222,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onBefore(Request request, int id) {
             Log.e("reeuest", "" + request + id);
+            Toast.makeText(LoginActivity.this, request.toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -234,19 +233,26 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onError(Call call, Exception e, int id) {
             e.printStackTrace();
+            if(dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            Toast.makeText(LoginActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onResponse(String response, int id) {
             Gson gson = new Gson();
             EmpInfoEntity empInfoEntity = gson.fromJson(response, EmpInfoEntity.class);
-            Intent it = new Intent(LoginActivity.this, MainActivity4.class);
-            it.putExtra("CURRENT_ID", CURRENT_ID);
-            it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoEntity);
-            startActivity(it);
-            mCache.put(Constant.empInfoCache, empInfoEntity);
-
-            finish();
+            if(empInfoEntity == null) {
+                Toast.makeText(LoginActivity.this, "登录失败, 可尝试手动输入ID登录", Toast.LENGTH_SHORT).show();
+            } else {
+                Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+                it.putExtra("CURRENT_ID", CURRENT_ID);
+                it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoEntity);
+                startActivity(it);
+//                mCache.put(Constant.empInfoCache, empInfoEntity);
+                finish();
+            }
         }
 
         @Override
@@ -255,17 +261,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
         }
     }
 
-    private void getCache() {
-        mCache = ACache.get(this);
-        empInfoCache = (EmpInfoEntity) mCache.getAsObject(Constant.empInfoCache);
-        if(empInfoCache != null) {
-            //获取员工信息缓存
-            Intent it = new Intent(LoginActivity.this, MainActivity4.class);
-            it.putExtra("CURRENT_ID", empInfoCache.getCardNo());
-            it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoCache);
-            startActivity(it);
-            finish();
-        }
-    }
+//    private void getCache() {
+//        mCache = ACache.get(this);
+//        empInfoCache = (EmpInfoEntity) mCache.getAsObject(Constant.empInfoCache);
+//        if(empInfoCache != null) {
+//            //获取员工信息缓存
+//            Intent it = new Intent(LoginActivity.this, MainActivity4.class);
+//            it.putExtra("CURRENT_ID", empInfoCache.getCardNo());
+//            it.putExtra(EmpInfoEntity.class.getSimpleName(), empInfoCache);
+//            startActivity(it);
+//            finish();
+//        }
+//    }
 
 }

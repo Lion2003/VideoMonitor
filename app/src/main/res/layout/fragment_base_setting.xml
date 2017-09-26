@@ -109,6 +109,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HZ2GD10023"/>
+        <RadioButton
+            android:id="@+id/rb4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HZ2GD10018"/>
     </RadioGroup>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -133,9 +138,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="URL："/>
+            android:text="百联URL："/>
         <EditText
             android:id="@+id/url"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:hint="请输入url"
+            android:textSize="@dimen/f_14"
+            android:focusable="true"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="富山云URL："/>
+        <EditText
+            android:id="@+id/fushan_url"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:hint="请输入url"

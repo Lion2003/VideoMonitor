@@ -42,61 +42,64 @@ public class SewingMachineFragment extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_sewing_machine, container, false);
+        try {
+            sewingEntity = (SewingMachineEntity) getArguments().getSerializable(SewingMachineEntity.class.getSimpleName());
+            sewingUnlockEntity = (SewingMachineEntity) getArguments().getSerializable("lockState");
 
-        sewingEntity = (SewingMachineEntity) getArguments().getSerializable(SewingMachineEntity.class.getSimpleName());
-        sewingUnlockEntity = (SewingMachineEntity) getArguments().getSerializable("lockState");
+            //实例化缝纫机信息控件
+            code = (TextView) view.findViewById(R.id.code); //设备编号
+            modelNo = (TextView) view.findViewById(R.id.modelNo); //型号
+            thisBootTime = (TextView) view.findViewById(R.id.thisBootTime); //本次开机时间
+            sumBootTime = (TextView) view.findViewById(R.id.sumBootTime); //累计开机时间
+            pinNum = (TextView) view.findViewById(R.id.pinNum); //本次开机针数
+            sumPinNum = (TextView) view.findViewById(R.id.sumPinNum); //累计开机针数
+            cutLineNum = (TextView) view.findViewById(R.id.cutLineNum); //本次切线数
+            sumCutLineNum = (TextView) view.findViewById(R.id.sumCutLineNum); //累计切线数
+            presserNum = (TextView) view.findViewById(R.id.presserNum); //本次压脚抬起数
+            sumPresserNum = (TextView) view.findViewById(R.id.sumPresserNum); //累计压脚抬起数
+            speed = (TextView) view.findViewById(R.id.speed); //当前转速
 
-        //实例化缝纫机信息控件
-        code = (TextView) view.findViewById(R.id.code); //设备编号
-        modelNo = (TextView) view.findViewById(R.id.modelNo); //型号
-        thisBootTime = (TextView) view.findViewById(R.id.thisBootTime); //本次开机时间
-        sumBootTime = (TextView) view.findViewById(R.id.sumBootTime); //累计开机时间
-        pinNum = (TextView) view.findViewById(R.id.pinNum); //本次开机针数
-        sumPinNum = (TextView) view.findViewById(R.id.sumPinNum); //累计开机针数
-        cutLineNum = (TextView) view.findViewById(R.id.cutLineNum); //本次切线数
-        sumCutLineNum = (TextView) view.findViewById(R.id.sumCutLineNum); //累计切线数
-        presserNum = (TextView) view.findViewById(R.id.presserNum); //本次压脚抬起数
-        sumPresserNum = (TextView) view.findViewById(R.id.sumPresserNum); //累计压脚抬起数
-        speed = (TextView) view.findViewById(R.id.speed); //当前转速
+            tvLockState = (TextView) view.findViewById(R.id.fom_tvLockState); //锁的状态
+            btnLockState = (TextView) view.findViewById(R.id.fom_btnLockState); //锁的状态
+            btnLockState.setOnClickListener(this);
 
-        tvLockState = (TextView) view.findViewById(R.id.fom_tvLockState); //锁的状态
-        btnLockState = (TextView) view.findViewById(R.id.fom_btnLockState); //锁的状态
-        btnLockState.setOnClickListener(this);
+            code.setText(ShareUtils.getSewingId(getActivity())); //设备编号
+            modelNo.setText("MK009"); //型号
+            if(sewingEntity != null && sewingEntity.getRetBody() != null) {
+                thisBootTime.setText(sewingEntity.getRetBody().getParam3() +  "分钟"); //本次开机时间
+                sumBootTime.setText(sewingEntity.getRetBody().getParam4() + "小时"); //累计开机时间
+                pinNum.setText(sewingEntity.getRetBody().getParam7() + "针"); //本次开机针数
+                sumPinNum.setText(sewingEntity.getRetBody().getParam8()); //累计开机针数
+                cutLineNum.setText(sewingEntity.getRetBody().getParam5() + "次"); //本次切线数
+                sumCutLineNum.setText(sewingEntity.getRetBody().getParam6() + "次"); //累计切线数
+                presserNum.setText(sewingEntity.getRetBody().getParam9() + "次"); //本次压脚抬起数
+                sumPresserNum.setText(sewingEntity.getRetBody().getParam10() + "次"); //累计压脚抬起数
+                speed.setText(sewingEntity.getRetBody().getParam11() + "RPM"); //当前转速
+            }
 
-        code.setText(ShareUtils.getSewingId(getActivity())); //设备编号
-        modelNo.setText("MK009"); //型号
-        if(sewingEntity != null && sewingEntity.getRetBody() != null) {
-            thisBootTime.setText(sewingEntity.getRetBody().getParam3() +  "分钟"); //本次开机时间
-            sumBootTime.setText(sewingEntity.getRetBody().getParam4() + "小时"); //累计开机时间
-            pinNum.setText(sewingEntity.getRetBody().getParam7() + "针"); //本次开机针数
-            sumPinNum.setText(sewingEntity.getRetBody().getParam8()); //累计开机针数
-            cutLineNum.setText(sewingEntity.getRetBody().getParam5() + "次"); //本次切线数
-            sumCutLineNum.setText(sewingEntity.getRetBody().getParam6() + "次"); //累计切线数
-            presserNum.setText(sewingEntity.getRetBody().getParam9() + "次"); //本次压脚抬起数
-            sumPresserNum.setText(sewingEntity.getRetBody().getParam10() + "次"); //累计压脚抬起数
-            speed.setText(sewingEntity.getRetBody().getParam11() + "RPM"); //当前转速
-        }
-
-        if(sewingUnlockEntity == null) {
-            tvLockState.setVisibility(View.GONE);
-            btnLockState.setVisibility(View.GONE);
-        } else {
-            tvLockState.setVisibility(View.VISIBLE);
-            btnLockState.setVisibility(View.VISIBLE);
-            if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
-                isRequestSuccess = true;
-                if(MyApplication.isLockState == 1) {
-                    tvLockState.setText("解锁成功");
-                    btnLockState.setText("锁定");
-                } else {
-                    tvLockState.setText("锁定成功");
+            if(sewingUnlockEntity == null) {
+                tvLockState.setVisibility(View.GONE);
+                btnLockState.setVisibility(View.GONE);
+            } else {
+                tvLockState.setVisibility(View.VISIBLE);
+                btnLockState.setVisibility(View.VISIBLE);
+                if(sewingUnlockEntity.getRetCode() == 0) {  //解锁成功
+                    isRequestSuccess = true;
+                    if(MyApplication.isLockState == 1) {
+                        tvLockState.setText("解锁成功");
+                        btnLockState.setText("锁定");
+                    } else {
+                        tvLockState.setText("锁定成功");
+                        btnLockState.setText("重新解锁");
+                    }
+                } else {  //解锁失败
+                    isRequestSuccess = false;
+                    tvLockState.setText("解锁失败");
                     btnLockState.setText("重新解锁");
                 }
-            } else {  //解锁失败
-                isRequestSuccess = false;
-                tvLockState.setText("解锁失败");
-                btnLockState.setText("重新解锁");
             }
+        } catch(Exception e) {
+
         }
 
         return view;
